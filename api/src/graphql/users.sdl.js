@@ -8,6 +8,11 @@ export const schema = gql`
     # salt: String!
     # resetToken: String
     # resetTokenExpiresAt: DateTime
+    createdAt: DateTime!
+    updatedAt: DateTime!
+    profilePicUrl: String
+    userSettings: String
+    roles: [String!]!
   }
 
   type Query {

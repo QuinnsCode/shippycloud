@@ -1,6 +1,7 @@
 datasource db {
-  provider = "sqlite"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DATABASE_URL")
 }
 
 generator client {
@@ -24,11 +25,60 @@ model Contact {
 }
 
 model User {
-  id                  Int @id @default(autoincrement())
+  id                  Int                  @id @default(autoincrement())
   name                String?
-  email               String @unique
+  email               String               @unique
   hashedPassword      String
   salt                String
   resetToken          String?
   resetTokenExpiresAt DateTime?
+  createdAt           DateTime             @default(now())
+  updatedAt           DateTime             @updatedAt
+  profilePicUrl       String?
+  userSettings        String?              @default("")
+  roles               String[]             @default(["user"])
+  memberships         OrganizationMember[] // One user can belong to multiple tenants
+}
+
+model OrganizationMember {
+  id             Int          @id @default(autoincrement())
+  user           User         @relation(fields: [userId], references: [id])
+  userId         Int
+  organization   Organization @relation(fields: [organizationId], references: [id])
+  organizationId String
+  role           String // e.g., 'ADMIN', 'MEMBER', 'OWNER'
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+
+  @@unique([userId, organizationId]) // Each user can only have one role per tenant
+}
+
+model Organization {
+  id                String               @id @default(uuid())
+  name              String
+  domain            String?              @unique // Optional: for domain-based identification
+  members           OrganizationMember[] // Many users can belong to one tenant
+  webhooksEventLogs WebhookEventLog[] // Example of tenant-specific data
+  orderData         OrderData[] // Example of tenant-specific data
+  createdAt         DateTime             @default(now())
+  updatedAt         DateTime             @updatedAt
+}
+
+model WebhookEventLog {
+  id             String       @id @default(uuid())
+  organization   Organization @relation(fields: [organizationId], references: [id])
+  organizationId String
+  event          String
+  source         String
+  payload        String
+  createdAt      DateTime     @default(now())
+}
+
+model OrderData {
+  id             String       @id @default(uuid())
+  organization   Organization @relation(fields: [organizationId], references: [id])
+  organizationId String
+  orderId        String?
+  data           String
+  createdAt      DateTime     @default(now())
 }

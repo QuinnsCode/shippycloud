@@ -6,9 +6,9 @@
 # https://redwoodjs.com/docs/app-configuration-redwood-toml
 
 [web]
-  title = "Redwood Tutorial Blog"
+  title = "ShippyCloud"
   port = 8910
-  apiUrl = "/.netlify/functions"
+  apiUrl = "/.redwood/functions"
   includeEnvironmentVariables = [
     # Add any ENV vars that should be available to the web side to this array
     # See https://redwoodjs.com/docs/environment-variables#web

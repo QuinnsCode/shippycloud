@@ -13,7 +13,7 @@ const BlogLayout = ({ children }) => {
             className="text-blue-400 hover:text-blue-100 transition duration-100"
             to={routes.home()}
           >
-            Redwood Blog
+            Shippycloud
           </Link>
         </h1>
         <nav>
@@ -50,7 +50,7 @@ const BlogLayout = ({ children }) => {
           </ul>
           {isAuthenticated && (
             <div className="absolute bottom-1 right-0 mr-12 text-xs text-blue-300">
-              {currentUser.email}
+              {currentUser?.email}
             </div>
           )}
         </nav>

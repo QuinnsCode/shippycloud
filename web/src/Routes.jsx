@@ -33,6 +33,8 @@ const Routes = () => {
         <Route path="/contact" page={ContactPage} name="contact" />
         <Route path="/article/{id:Int}" page={ArticlePage} name="article" />
         <Route path="/about" page={AboutPage} name="about" />
+        <Route path="/a/{appId:String}" page={HomePage} name="home-with-appId" />
+        <Route path="/a" page={HomePage} name="home-no-appId" />
         <Route path="/" page={HomePage} name="home" />
       </Set>
       <Route notfound page={NotFoundPage} />
