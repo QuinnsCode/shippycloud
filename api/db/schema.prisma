@@ -25,7 +25,7 @@ model Contact {
 }
 
 model User {
-  id                  Int                  @id @default(autoincrement())
+  id                  String               @id @default(uuid())
   name                String?
   email               String               @unique
   hashedPassword      String
@@ -41,9 +41,9 @@ model User {
 }
 
 model OrganizationMember {
-  id             Int          @id @default(autoincrement())
+  id             String       @id @default(uuid())
   user           User         @relation(fields: [userId], references: [id])
-  userId         Int
+  userId         String
   organization   Organization @relation(fields: [organizationId], references: [id])
   organizationId String
   role           String // e.g., 'ADMIN', 'MEMBER', 'OWNER'
