@@ -14,7 +14,7 @@ const BlogLayout = ({ children }) => {
             className="text-blue-400 hover:text-blue-300 transition duration-100"
             to={routes.home()}
           >
-            Testcloud
+            Testycloud
           </Link>
         </h1>
         <nav>
