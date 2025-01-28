@@ -7,16 +7,42 @@ import {
   Submit,
 } from '@redwoodjs/forms'
 
-const OrganizationForm = (props) => {
+// type OrganizationFormProps = {
+//   organization?: {
+//     id: string
+//     name: string
+//     domain?: string | null
+//   }
+//   userId: string  // Will be passed from the parent component
+//   onSave: (data: OrganizationFormValues, id?: string) => void
+//   error?: Error
+//   loading?: boolean
+// }
+
+// type OrganizationFormValues = {
+//   name: string
+//   domain?: string
+//   userId: string  // Include userId in the form values
+// }
+
+const OrganizationForm = ({ organization, userId, onSave, error, loading }) => {
   const onSubmit = (data) => {
-    props.onSave(data, props?.organization?.id)
+    console.log('onSubmit: ', data)
+    // Include userId in the submitted data
+    onSave(
+      {
+        ...data,
+        userId, // Add userId to be used for creating OrganizationMember
+      },
+      organization?.id
+    )
   }
 
   return (
     <div className="rw-form-wrapper">
-      <Form onSubmit={onSubmit} error={props.error}>
+      <Form onSubmit={onSubmit} error={error}>
         <FormError
-          error={props.error}
+          error={error}
           wrapperClassName="rw-form-error-wrapper"
           titleClassName="rw-form-error-title"
           listClassName="rw-form-error-list"
@@ -27,15 +53,24 @@ const OrganizationForm = (props) => {
           className="rw-label"
           errorClassName="rw-label rw-label-error"
         >
-          Name
+          Organization Name
         </Label>
 
         <TextField
           name="name"
-          defaultValue={props.organization?.name}
+          defaultValue={organization?.name}
           className="rw-input"
           errorClassName="rw-input rw-input-error"
-          validation={{ required: true }}
+          validation={{
+            required: {
+              value: true,
+              message: 'Organization name is required',
+            },
+            minLength: {
+              value: 5,
+              message: 'Organization name must be at least 5 characters',
+            },
+          }}
         />
 
         <FieldError name="name" className="rw-field-error" />
@@ -45,21 +80,27 @@ const OrganizationForm = (props) => {
           className="rw-label"
           errorClassName="rw-label rw-label-error"
         >
-          Domain
+          Domain (Optional)
         </Label>
 
         <TextField
           name="domain"
-          defaultValue={props.organization?.domain}
+          defaultValue={organization?.domain || ''}
           className="rw-input"
           errorClassName="rw-input rw-input-error"
+          validation={{
+            pattern: {
+              value: /^[a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9]\.[a-zA-Z]{2,}$/,
+              message: 'Please enter a valid domain (e.g., example.com)',
+            },
+          }}
         />
 
         <FieldError name="domain" className="rw-field-error" />
 
         <div className="rw-button-group">
-          <Submit disabled={props.loading} className="rw-button rw-button-blue">
-            Save
+          <Submit disabled={loading} className="rw-button rw-button-blue">
+            {loading ? 'Saving...' : 'Save'}
           </Submit>
         </div>
       </Form>

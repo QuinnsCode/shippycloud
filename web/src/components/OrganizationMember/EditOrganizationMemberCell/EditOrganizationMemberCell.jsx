@@ -1,12 +1,11 @@
 import { navigate, routes } from '@redwoodjs/router'
-
 import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
 
 import OrganizationMemberForm from 'src/components/OrganizationMember/OrganizationMemberForm'
 
 export const QUERY = gql`
-  query EditOrganizationMemberById($id: Int!) {
+  query EditOrganizationMemberById($id: String!) {
     organizationMember: organizationMember(id: $id) {
       id
       userId
@@ -20,7 +19,7 @@ export const QUERY = gql`
 
 const UPDATE_ORGANIZATION_MEMBER_MUTATION = gql`
   mutation UpdateOrganizationMemberMutation(
-    $id: Int!
+    $id: String!
     $input: UpdateOrganizationMemberInput!
   ) {
     updateOrganizationMember(id: $id, input: $input) {

@@ -5,9 +5,9 @@ const AboutPage = () => {
     <>
       <MetaTags title="About" description="About page" />
 
+      <p className="font-light">Make Shipstation work for you.</p>
       <p className="font-light">
-        This site was created to demonstrate my mastery of Redwood: Look on my
-        works, ye mighty, and despair!
+        Save Time, Save money with ShippyCloud fulfillment software solutions.
       </p>
     </>
   )

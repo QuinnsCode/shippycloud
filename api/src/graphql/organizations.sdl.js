@@ -5,14 +5,25 @@ export const schema = gql`
     domain: String
     members: [OrganizationMember]!
     webhooksEventLogs: [WebhookEventLog]!
+    endpoints: [Endpoint!]
     orderData: [OrderData]!
+    organizationSettings: String
     createdAt: DateTime!
     updatedAt: DateTime!
   }
-
+  type Endpoint {
+    id: String!
+    organizationId: String!
+    name: String!
+    slug: String
+    endpointType: String!
+    createdByUserId: String!
+    createdAt: DateTime!
+  }
   type Query {
     organizations: [Organization!]! @requireAuth
     organization(id: String!): Organization @requireAuth
+    organizationsOfAUser(userId: String!): [Organization!]! @requireAuth
   }
 
   input CreateOrganizationInput {
@@ -20,12 +31,22 @@ export const schema = gql`
     domain: String
   }
 
-  input UpdateOrganizationInput {
-    name: String
+  input CreateOrganizationAndMemberInput {
+    name: String!
+    userId: String!
     domain: String
   }
 
+  input UpdateOrganizationInput {
+    name: String
+    domain: String
+    organizationSettings: String
+  }
+
   type Mutation {
+    createOrganizationAndCreateOrganizationMember(
+      input: CreateOrganizationAndMemberInput!
+    ): Organization! @requireAuth
     createOrganization(input: CreateOrganizationInput!): Organization!
       @requireAuth
     updateOrganization(

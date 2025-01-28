@@ -7,12 +7,13 @@ const ScaffoldLayout = (props) => {
       <Toaster />
       <header className="rw-header">
         <h1 className="rw-heading rw-heading-primary">
-          <Link to={routes.posts()} className="rw-link">
+          {/* <Link to={routes.posts()} className="rw-link">
             Posts
-          </Link>
+          </Link> */}
+          {props.title}
         </h1>
-        <Link to={routes.newPost()} className="rw-button rw-button-green">
-          <div className="rw-button-icon">+</div> New Post
+        <Link to={props.buttonTo} className="rw-button rw-button-green">
+          <div className="rw-button-icon">+</div> {props?.buttonLabel}
         </Link>
       </header>
       <main className="rw-main">{props.children}</main>

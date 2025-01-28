@@ -54,14 +54,28 @@ model OrganizationMember {
 }
 
 model Organization {
-  id                String               @id @default(uuid())
-  name              String
-  domain            String?              @unique // Optional: for domain-based identification
-  members           OrganizationMember[] // Many users can belong to one tenant
-  webhooksEventLogs WebhookEventLog[] // Example of tenant-specific data
-  orderData         OrderData[] // Example of tenant-specific data
-  createdAt         DateTime             @default(now())
-  updatedAt         DateTime             @updatedAt
+  id                   String               @id @default(uuid())
+  name                 String
+  domain               String?              @unique // Optional: for domain-based identification
+  members              OrganizationMember[] // Many users can belong to one tenant
+  webhooksEventLogs    WebhookEventLog[] // Example of tenant-specific data
+  orderData            OrderData[] // Example of tenant-specific data
+  endpoints            Endpoint[] // Example of tenant-specific data
+  organizationSettings String?              @default("")
+  createdAt            DateTime             @default(now())
+  updatedAt            DateTime             @updatedAt
+}
+
+model Endpoint {
+  id              String       @id @default(uuid())
+  organization    Organization @relation(fields: [organizationId], references: [id])
+  organizationId  String
+  name            String
+  slug            String? // Optional: for URL-based identification
+  endpointType    String
+  createdByUserId String
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
 }
 
 model WebhookEventLog {
@@ -81,4 +95,5 @@ model OrderData {
   orderId        String?
   data           String
   createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
 }

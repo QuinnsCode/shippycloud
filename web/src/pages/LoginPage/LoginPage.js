@@ -14,6 +14,7 @@ import { MetaTags } from '@redwoodjs/web'
 import { toast, Toaster } from '@redwoodjs/web/toast'
 
 import { useAuth } from 'src/auth'
+import SignUp from 'src/components/AuthButtons/SignUp/SignUp'
 
 const LoginPage = () => {
   const { isAuthenticated, logIn } = useAuth()
@@ -38,6 +39,9 @@ const LoginPage = () => {
       toast.error(response.error)
     } else {
       toast.success('Welcome back!')
+      setTimeout(() => {
+        navigate(routes.home())
+      }, 1700)
     }
   }
 
@@ -117,10 +121,7 @@ const LoginPage = () => {
             </div>
           </div>
           <div className="rw-login-link mt-2 text-center">
-            <span>Don&apos;t have an account?</span>{' '}
-            <Link to={routes.signup()} className="rw-link">
-              Sign up!
-            </Link>
+            <span>Don&apos;t have an account?</span> <SignUp />
           </div>
         </div>
       </main>

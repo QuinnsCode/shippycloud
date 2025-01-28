@@ -9,10 +9,10 @@
 
 import { Router, Route, Private, Set } from '@redwoodjs/router'
 
+import { useAuth } from 'src/auth'
 import BlogLayout from 'src/layouts/BlogLayout'
+import OrganizationLayout from 'src/layouts/OrganizationLayout'
 import ScaffoldLayout from 'src/layouts/ScaffoldLayout'
-
-import { useAuth } from './auth'
 
 const Routes = () => {
   return (
@@ -51,6 +51,16 @@ const Routes = () => {
       </Private>
 
       <Set wrap={BlogLayout}>
+        <Set wrap={ScaffoldLayout} title="Endpoints" titleTo="endpoints" buttonLabel="New Endpoint" buttonTo="newEndpoint">
+          <Route path="/endpoints/new/{userId:String,organizationId:String}" page={EndpointNewEndpointPage} name="newEndpointUserOrg" />
+          <Route path="/endpoints/new" page={EndpointNewEndpointPage} name="newEndpoint" />
+          <Route path="/endpoints/{id}/edit" page={EndpointEditEndpointPage} name="editEndpoint" />
+          <Route path="/endpoints/{id}" page={EndpointEndpointPage} name="endpoint" />
+          <Route path="/endpoints" page={EndpointEndpointsPage} name="endpoints" />
+        </Set>
+
+        <Route path="/a/{appId:String}" page={HomePage} name="homeWithAppId" />
+
         <Route path="/login" page={LoginPage} name="login" />
         <Route path="/signup" page={SignupPage} name="signup" />
         <Route path="/forgot-password" page={ForgotPasswordPage} name="forgotPassword" />
@@ -58,7 +68,7 @@ const Routes = () => {
         <Route path="/contact" page={ContactPage} name="contact" />
         <Route path="/article/{id:Int}" page={ArticlePage} name="article" />
         <Route path="/about" page={AboutPage} name="about" />
-        <Route path="/a/{appId:String}" page={HomePage} name="home-with-appId" />
+
         <Route path="/a" page={HomePage} name="home-no-appId" />
         <Route path="/" page={HomePage} name="home" />
       </Set>

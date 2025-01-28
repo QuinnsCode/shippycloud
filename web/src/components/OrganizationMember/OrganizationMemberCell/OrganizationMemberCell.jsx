@@ -1,7 +1,7 @@
 import OrganizationMember from 'src/components/OrganizationMember/OrganizationMember'
 
 export const QUERY = gql`
-  query FindOrganizationMemberById($id: Int!) {
+  query FindOrganizationMemberById($id: String!) {
     organizationMember: organizationMember(id: $id) {
       id
       userId

@@ -1,13 +1,12 @@
 import { Link, routes } from '@redwoodjs/router'
 import { useMutation } from '@redwoodjs/web'
-
 import { toast } from '@redwoodjs/web/toast'
 
 import { QUERY } from 'src/components/OrganizationMember/OrganizationMembersCell'
 import { timeTag, truncate } from 'src/lib/formatters'
 
 const DELETE_ORGANIZATION_MEMBER_MUTATION = gql`
-  mutation DeleteOrganizationMemberMutation($id: Int!) {
+  mutation DeleteOrganizationMemberFromMembersMutation($id: String!) {
     deleteOrganizationMember(id: $id) {
       id
     }
@@ -78,7 +77,7 @@ const OrganizationMembersList = ({ organizationMembers }) => {
                   >
                     Show
                   </Link>
-                  <Link
+                  {/* <Link
                     to={routes.editOrganizationMember({
                       id: organizationMember.id,
                     })}
@@ -86,7 +85,7 @@ const OrganizationMembersList = ({ organizationMembers }) => {
                     className="rw-button rw-button-small rw-button-blue"
                   >
                     Edit
-                  </Link>
+                  </Link> */}
                   <button
                     type="button"
                     title={'Delete organizationMember ' + organizationMember.id}

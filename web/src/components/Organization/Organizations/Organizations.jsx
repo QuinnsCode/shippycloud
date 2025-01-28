@@ -1,6 +1,5 @@
 import { Link, routes } from '@redwoodjs/router'
 import { useMutation } from '@redwoodjs/web'
-
 import { toast } from '@redwoodjs/web/toast'
 
 import { QUERY } from 'src/components/Organization/OrganizationsCell'
@@ -43,6 +42,7 @@ const OrganizationsList = ({ organizations }) => {
             <th>Id</th>
             <th>Name</th>
             <th>Domain</th>
+            <th>Organization Settings</th>
             <th>Created at</th>
             <th>Updated at</th>
             <th>&nbsp;</th>
@@ -54,6 +54,7 @@ const OrganizationsList = ({ organizations }) => {
               <td>{truncate(organization.id)}</td>
               <td>{truncate(organization.name)}</td>
               <td>{truncate(organization.domain)}</td>
+              <td>{truncate(organization.organizationSettings)}</td>
               <td>{timeTag(organization.createdAt)}</td>
               <td>{timeTag(organization.updatedAt)}</td>
               <td>
@@ -65,13 +66,13 @@ const OrganizationsList = ({ organizations }) => {
                   >
                     Show
                   </Link>
-                  <Link
+                  {/* <Link
                     to={routes.editOrganization({ id: organization.id })}
                     title={'Edit organization ' + organization.id}
                     className="rw-button rw-button-small rw-button-blue"
                   >
                     Edit
-                  </Link>
+                  </Link> */}
                   <button
                     type="button"
                     title={'Delete organization ' + organization.id}

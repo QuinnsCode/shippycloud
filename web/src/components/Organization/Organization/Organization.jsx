@@ -1,6 +1,5 @@
 import { Link, routes, navigate } from '@redwoodjs/router'
 import { useMutation } from '@redwoodjs/web'
-
 import { toast } from '@redwoodjs/web/toast'
 
 import { timeTag } from 'src/lib/formatters'
@@ -13,7 +12,7 @@ const DELETE_ORGANIZATION_MUTATION = gql`
   }
 `
 
-const Organization = ({ organization }) => {
+const Organization = ({ organization, returnToWhere }) => {
   const [deleteOrganization] = useMutation(DELETE_ORGANIZATION_MUTATION, {
     onCompleted: () => {
       toast.success('Organization deleted')
@@ -26,16 +25,26 @@ const Organization = ({ organization }) => {
 
   const onDeleteClick = (id) => {
     if (confirm('Are you sure you want to delete organization ' + id + '?')) {
-      deleteOrganization({ variables: { id } })
+      deleteOrganization({ variables: { id } }).then(() => {
+        toast.success('Organization deleted')
+        setTimeout(() => {
+          navigate(routes.home())
+        }, 1300)
+      })
     }
+  }
+
+  const returnBack = (where) => {
+    navigate(where)
   }
 
   return (
     <>
       <div className="rw-segment">
         <header className="rw-segment-header">
-          <h2 className="rw-heading rw-heading-secondary">
-            Organization {organization.id} Detail
+          <h2 className="">
+            Detail for Organization :
+            <br />
           </h2>
         </header>
         <table className="rw-table">
@@ -64,12 +73,12 @@ const Organization = ({ organization }) => {
         </table>
       </div>
       <nav className="rw-button-group">
-        <Link
+        {/* <Link
           to={routes.editOrganization({ id: organization.id })}
           className="rw-button rw-button-blue"
         >
           Edit
-        </Link>
+        </Link> */}
         <button
           type="button"
           className="rw-button rw-button-red"
@@ -77,6 +86,13 @@ const Organization = ({ organization }) => {
         >
           Delete
         </button>
+        {returnToWhere ? (
+          <Link to={returnToWhere} className="rw-button rw-button-blue">
+            Return
+          </Link>
+        ) : (
+          <></>
+        )}
       </nav>
     </>
   )

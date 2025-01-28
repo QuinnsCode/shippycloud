@@ -1,8 +1,8 @@
 export const schema = gql`
   type OrganizationMember {
-    id: Int!
+    id: String!
     user: User!
-    userId: Int!
+    userId: String!
     organization: Organization!
     organizationId: String!
     role: String!
@@ -12,17 +12,17 @@ export const schema = gql`
 
   type Query {
     organizationMembers: [OrganizationMember!]! @requireAuth
-    organizationMember(id: Int!): OrganizationMember @requireAuth
+    organizationMember(id: String!): OrganizationMember @requireAuth
   }
 
   input CreateOrganizationMemberInput {
-    userId: Int!
+    userId: String!
     organizationId: String!
     role: String!
   }
 
   input UpdateOrganizationMemberInput {
-    userId: Int
+    userId: String
     organizationId: String
     role: String
   }
@@ -32,9 +32,9 @@ export const schema = gql`
       input: CreateOrganizationMemberInput!
     ): OrganizationMember! @requireAuth
     updateOrganizationMember(
-      id: Int!
+      id: String!
       input: UpdateOrganizationMemberInput!
     ): OrganizationMember! @requireAuth
-    deleteOrganizationMember(id: Int!): OrganizationMember! @requireAuth
+    deleteOrganizationMember(id: String!): OrganizationMember! @requireAuth
   }
 `
