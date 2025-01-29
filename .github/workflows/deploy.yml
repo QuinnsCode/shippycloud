@@ -19,11 +19,23 @@ jobs:
 
     - name: Deploy to VPS
       run: |
+        # SSH into the VPS and run commands
         ssh -o StrictHostKeyChecking=no deploy@66.42.103.234 << 'EOF'
+          # Go to the app directory on the VPS
           cd /var/www/app
+
+          # Pull the latest changes from the main branch
           git pull origin main
+
+          # Install dependencies
           yarn install
+
+          # Build the web assets
           yarn rw build
+
+          # Run database migrations (ensure prisma is properly set up)
           yarn rw prisma migrate deploy
+
+          # Restart the app using pm2
           pm2 restart all
         EOF
