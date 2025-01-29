@@ -12,8 +12,6 @@
 //     },
 //   ],
 // }
-// If you follow our recommended config below, you could update this to only serve the api side,
-// because the web side will be handled by nginx.
 
 module.exports = {
   apps: [

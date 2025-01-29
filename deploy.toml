@@ -13,25 +13,39 @@
 #
 # See https://redwoodjs.com/docs/deploy/baremetal for more info
 
-
-
 [[production.servers]]
-# Update the host, user, and password
 host = "${DEPLOY_HOST}"
 username = "${DEPLOY_USERNAME}"
-password = "${DEPLOY_PASSWORD}" # THIS LINE NEEDS TO BE ADDED DO NOT MISS THIS LINE
-agentForward = false # THIS LINE NEEDS TO SET TO FALSE TO USE USER/PASS
-sides = ["api", "web"]
+password = "${DEPLOY_PASSWORD}"
+agentForward = false
+sides = ["api","web"]
 packageManagerCommand = "yarn"
 monitorCommand = "pm2"
 path = "/var/www/app"
-processNames = ["api"]
-# Update the repo
+processNames = ["serve"]
 repo = "git@github.com:QuinnsCode/shippycloud.git"
 branch = "main"
 keepReleases = 3
 
-[after]
-install = ["yarn rw prisma generate"]
-build = ["yarn rw build web"]
-#restart = ["pm2 restart job"]
+# If you have separate api and web servers:
+#
+# [[production.servers]]
+# host = "api.server.com"
+# username = "user"
+# agentForward = true
+# sides = ["api"]
+# path = "/var/www/app"
+# repo = "git@github.com:redwoodjs/redwood.git"
+# branch = "main"
+# processNames = ["api"]
+#
+# [[production.servers]]
+# host = "web.server.com"
+# username = "user"
+# agentForward = true
+# sides = ["web"]
+# path = "/var/www/app"
+# repo = "git@github.com:redwoodjs/redwood.git"
+# branch = "main"
+# migrate = false # only one server in a cluster needs to migrate
+# processNames = ["web"]
