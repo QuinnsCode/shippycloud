@@ -5,7 +5,7 @@ import { useAuth } from 'src/auth'
 const BlogLayout = ({ children }) => {
   const { logOut, isAuthenticated, currentUser } = useAuth()
 
-  console.log('children', children)
+  // console.log('children', children)
   return (
     <div className="w-full">
       <header className="relative flex justify-between items-center py-4 px-8 bg-gradient-to-r from-blue-700 to-blue-800 via-blue-800 text-white">
@@ -14,7 +14,7 @@ const BlogLayout = ({ children }) => {
             className="text-blue-400 hover:text-blue-300 transition duration-100"
             to={routes.home()}
           >
-            Testycloud 1.009
+            Testycloud 1.0010
           </Link>
         </h1>
         <nav>
