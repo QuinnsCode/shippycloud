@@ -19,7 +19,7 @@ jobs:
 
     - name: Deploy to VPS
       run: |
-        ssh -o StrictHostKeyChecking=no root@45.76.174.10 << 'EOF'
+        ssh -o StrictHostKeyChecking=no deploy@45.76.174.10 << 'EOF'
           cd /var/www/app
           git pull origin main
           yarn install
