@@ -17,15 +17,35 @@
 host = "${DEPLOY_HOST}"
 username = "${DEPLOY_USERNAME}"
 password = "${DEPLOY_PASSWORD}"
-agentForward = true
+agentForward = false  # Change to false when using password
 sides = ["api","web"]
 packageManagerCommand = "yarn"
 monitorCommand = "pm2"
 path = "/var/www/app"
-processNames = ["serve"]
+processNames = ["api", "web"]  # Change to specify both api and web
 repo = "git@github.com:QuinnsCode/shippycloud.git"
 branch = "main"
 keepReleases = 5
+
+[after]
+install = ["yarn rw prisma generate"]
+build = ["yarn rw build"]
+migrate = ["yarn rw prisma migrate deploy"]
+
+#01 - 29 - 25 setup
+# [[production.servers]]
+# host = "${DEPLOY_HOST}"
+# username = "${DEPLOY_USERNAME}"
+# password = "${DEPLOY_PASSWORD}"
+# agentForward = true
+# sides = ["api","web"]
+# packageManagerCommand = "yarn"
+# monitorCommand = "pm2"
+# path = "/var/www/app"
+# processNames = ["serve"]
+# repo = "git@github.com:QuinnsCode/shippycloud.git"
+# branch = "main"
+# keepReleases = 5
 
 # If you have separate api and web servers:
 #
