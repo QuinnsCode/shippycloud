@@ -17,7 +17,7 @@
 host = "${DEPLOY_HOST}"
 username = "${DEPLOY_USERNAME}"
 password = "${DEPLOY_PASSWORD}"
-agentForward = false
+agentForward = true
 sides = ["api","web"]
 packageManagerCommand = "yarn"
 monitorCommand = "pm2"
