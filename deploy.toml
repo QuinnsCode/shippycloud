@@ -14,9 +14,10 @@
 # See https://redwoodjs.com/docs/deploy/baremetal for more info
 
 [[production.servers]]
-host = "45.76.174.10"
-username = "root"
-agentForward = true
+host = "${DEPLOY_HOST}"
+username = "${DEPLOY_USERNAME}"
+password = "${DEPLOY_PASSWORD}"
+agentForward = false
 sides = ["api","web"]
 packageManagerCommand = "yarn"
 monitorCommand = "pm2"
