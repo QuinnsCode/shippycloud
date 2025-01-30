@@ -153,13 +153,12 @@ export const handler = async (event, context) => {
       HttpOnly: true,
       Path: '/',
       SameSite: 'Strict',
-      // Secure: process.env.NODE_ENV !== 'development',
-      Secure: false,
+      Secure: process.env.NODE_ENV !== 'development',
 
       // If you need to allow other domains (besides the api side) access to
       // the dbAuth session cookie:
       // Domain: 'example.com',
-      Domain: process.env.WEBSITE_URL,
+      // Domain: process.env.WEBSITE_URL,
     },
 
     forgotPassword: forgotPasswordOptions,

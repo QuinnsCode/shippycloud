@@ -33,6 +33,8 @@ const LoginPage = () => {
   const onSubmit = async (data) => {
     const response = await logIn({ ...data })
 
+    console.log({response})
+
     if (response.message) {
       toast(response.message)
     } else if (response.error) {
