@@ -134,7 +134,7 @@ export const handler = async (event, context) => {
     // The name of the property you'd call on `db` to access your user table.
     // i.e. if your Prisma model is named `User` this value would be `user`, as in `db.user`
     authModelAccessor: 'user',
-
+    allowedUserFields: ['id', 'email'],
     // A map of what dbAuth calls a field to what your database calls it.
     // `id` is whatever column you use to uniquely identify a user (probably
     // something like `id` or `userId` or even `email`)
@@ -159,6 +159,7 @@ export const handler = async (event, context) => {
       // If you need to allow other domains (besides the api side) access to
       // the dbAuth session cookie:
       // Domain: 'example.com',
+      Domain: process.env.WEBSITE_URL,
     },
 
     forgotPassword: forgotPasswordOptions,
