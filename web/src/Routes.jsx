@@ -58,7 +58,8 @@ const Routes = () => {
           <Route path="/endpoints/{id}" page={EndpointEndpointPage} name="endpoint" />
           <Route path="/endpoints" page={EndpointEndpointsPage} name="endpoints" />
         </Set>
-
+        <Route path="/orders/{appId:String,userId:String}" page={OrdersPage} name="ordersOfAnOrg" />
+        <Route path="/events/{appId:String,userId:String}" page={EventsPage} name="eventsOfAnOrg" />
         <Route path="/a/{appId:String}" page={HomePage} name="homeWithAppId" />
 
         <Route path="/login" page={LoginPage} name="login" />

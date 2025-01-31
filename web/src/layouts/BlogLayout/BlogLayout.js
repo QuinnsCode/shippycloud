@@ -1,6 +1,7 @@
 import { Link, routes } from '@redwoodjs/router'
 
 import { useAuth } from 'src/auth'
+import MenuSidebar from 'src/components/Menu/MenuSidebar/MenuSidebar'
 
 const BlogLayout = ({ children }) => {
   const { logOut, isAuthenticated, currentUser } = useAuth()
@@ -76,6 +77,7 @@ const BlogLayout = ({ children }) => {
           )}
         </nav>
       </header>
+
       {/* only if authenticated AND there is an appId do we show the organization */}
       {isAuthenticated && children?.props?.params?.appId ? (
         <main>
@@ -83,10 +85,14 @@ const BlogLayout = ({ children }) => {
             <div className="">
               <div className="inline-flex px-1">Organization: </div>
               <div className="inline-flex px-1">
-                {children?.props?.params?.appId}
+                {children?.props?.params?.appId || 'whhjoio'}
               </div>
             </div>
-          </div>
+          </div>{' '}
+          <MenuSidebar
+            appId={children?.props?.params?.appId}
+            userId={currentUser?.id}
+          />
           <div className="max-w-7xl mx-auto bg-white shadow rounded-b">
             {children}
           </div>

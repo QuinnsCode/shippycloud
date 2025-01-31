@@ -13336,6 +13336,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"lucide-react@npm:^0.474.0":
+  version: 0.474.0
+  resolution: "lucide-react@npm:0.474.0"
+  peerDependencies:
+    react: ^16.5.1 || ^17.0.0 || ^18.0.0 || ^19.0.0
+  checksum: 60c88c251b2ed4d1074d24a7041122dc280c48cf68a1a25b23e35a296f49955e0edc22744f278929bc7e48dcd4248bed27d6a8227d5a42fc49fceb134194b310
+  languageName: node
+  linkType: hard
+
 "lz-string@npm:^1.4.4, lz-string@npm:^1.5.0":
   version: 1.5.0
   resolution: "lz-string@npm:1.5.0"
@@ -18181,6 +18190,7 @@ __metadata:
     "@tailwindcss/typography": 0.5.10
     autoprefixer: 10.4.16
     humanize-string: 2.1.0
+    lucide-react: ^0.474.0
     postcss: 8.4.30
     postcss-loader: 7.3.3
     prop-types: 15.8.1

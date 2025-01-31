@@ -20,7 +20,7 @@ import { organization } from 'src/services/organizations/organizations'
 import { createWebhookEventLog } from 'src/services/webhookEventLogs/webhookEventLogs'
 
 export const handler = async (event, context) => {
-  console.log('Handler called with: ' + event.path) // Debug log
+  // console.log('Handler called with: ' + event.path) // Debug log
 
   // console.log('Received request:', {
   //   method: event.httpMethod,
@@ -40,12 +40,12 @@ export const handler = async (event, context) => {
     }
   }
 
-  console.log('Raw path:', event.path)
-  console.log('Split result:', event.path.split('/w/'))
+  // console.log('Raw path:', event.path)
+  // console.log('Split result:', event.path.split('/w/'))
 
   //get the orgId from the path
   const orgId = event.path.split('/w/')[1]
-  console.log('orgId ' + orgId)
+  // console.log('orgId ' + orgId)
   try {
     if (!event.body) {
       return {
@@ -69,7 +69,7 @@ export const handler = async (event, context) => {
     await createWebhookEventLog({
       input: {
         organizationId: foundOrg.id,
-        event: webhookData.event || 'webhook.received',
+        event: 'webhook.received',
         source: 'api/w',
         payload: JSON.stringify(webhookData),
       },
@@ -82,7 +82,7 @@ export const handler = async (event, context) => {
       },
       body: JSON.stringify({
         message: 'Webhook received and logged',
-        userId: foundOrg.id,
+        organizationId: foundOrg.id,
       }),
     }
   } catch (error) {
