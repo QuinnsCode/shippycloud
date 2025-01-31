@@ -71,14 +71,14 @@ export const handler = async (event, context) => {
       try {
         // Attempt base64 decode
         const decoded = Buffer.from(event.body, 'base64').toString()
-        console.log('Decoded body:', decoded)
+        // console.log('Decoded body:', decoded)
         webhookData = JSON.parse(decoded)
       } catch (decodeError) {
-        console.error('Failed to parse body as JSON or base64:', {
-          originalError: parseError,
-          decodeError,
-          rawBody: event.body,
-        })
+        // console.error('Failed to parse body as JSON or base64:', {
+        //   originalError: parseError,
+        //   decodeError,
+        //   rawBody: event.body,
+        // })
         return {
           statusCode: 400,
           body: JSON.stringify({ error: 'Invalid request body format' }),
@@ -86,12 +86,15 @@ export const handler = async (event, context) => {
       }
     }
 
+    const eventType = webhookData?.resource_type || 'webhook.resourceType'
+    const webhookType = event?.queryStringParameters?.type || 'webhookType'
+
     // Save to WebhookEventLog
     await createWebhookEventLog({
       input: {
         organizationId: foundOrg.id,
-        event: 'webhook.received',
-        source: 'api/w',
+        event: eventType,
+        source: webhookType,
         payload: JSON.stringify(webhookData),
       },
     })

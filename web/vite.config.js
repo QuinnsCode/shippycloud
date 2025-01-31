@@ -11,6 +11,9 @@ dns.setDefaultResultOrder('verbatim')
 /** @type {import('vite').UserConfig} */
 const viteConfig = {
   plugins: [redwood()],
+  server: {
+    allowedHosts: ['localhost', '.ngrok-free.app'],
+  },
 }
 
 export default defineConfig(viteConfig)
