@@ -16,7 +16,11 @@ export const handler = createGraphQLHandler({
   directives,
   sdls,
   services,
-
+  cors: {
+    // 👈 setup your CORS configuration options
+    origin: ['https://shippycloud.com', 'http://shippycloud.com'],
+    credentials: true,
+  },
   onException: () => {
     // Disconnect from your database with an unhandled exception.
     db.$disconnect()

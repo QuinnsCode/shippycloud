@@ -146,7 +146,10 @@ export const handler = async (event, context) => {
       resetToken: 'resetToken',
       resetTokenExpiresAt: 'resetTokenExpiresAt',
     },
-
+    cors: {
+      origin: 'https://www.shippycloud.com', // <-- web side domain
+      credentials: true,
+    },
     // Specifies attributes on the cookie that dbAuth sets in order to remember
     // who is logged in. See https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies#restrict_access_to_cookies
     cookie: {
