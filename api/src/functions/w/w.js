@@ -63,7 +63,28 @@ export const handler = async (event, context) => {
       }
     }
 
-    const webhookData = JSON.parse(event.body)
+    // Try to parse body, attempt base64 decode if regular parse fails
+    let webhookData
+    try {
+      webhookData = JSON.parse(event.body)
+    } catch (parseError) {
+      try {
+        // Attempt base64 decode
+        const decoded = Buffer.from(event.body, 'base64').toString()
+        console.log('Decoded body:', decoded)
+        webhookData = JSON.parse(decoded)
+      } catch (decodeError) {
+        console.error('Failed to parse body as JSON or base64:', {
+          originalError: parseError,
+          decodeError,
+          rawBody: event.body,
+        })
+        return {
+          statusCode: 400,
+          body: JSON.stringify({ error: 'Invalid request body format' }),
+        }
+      }
+    }
 
     // Save to WebhookEventLog
     await createWebhookEventLog({
