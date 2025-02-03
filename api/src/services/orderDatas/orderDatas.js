@@ -10,6 +10,12 @@ export const orderData = ({ id }) => {
   })
 }
 
+export const orderDataOfAnOrg = ({ organizationId }) => {
+  return db.orderData.findMany({
+    where: { organizationId },
+  })
+}
+
 export const createOrderData = ({ input }) => {
   return db.orderData.create({
     data: input,

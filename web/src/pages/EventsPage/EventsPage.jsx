@@ -1,19 +1,28 @@
 // import { Link, routes } from '@redwoodjs/router'
 import { Metadata } from '@redwoodjs/web'
 
-const EventsPage = () => {
+import { useAuth } from 'src/auth'
+import SignUpLogIn from 'src/components/SignUpLogIn/SignUpLogIn'
+import WebhookEventsOfAnOrgCell from 'src/components/WebhookEventsOfAnOrgCell/WebhookEventsOfAnOrgCell'
+import WhOrgEventStreamer from 'src/components/WHOrgEventStreamer/WHOrgEventStreamer'
+
+const EventsPage = ({ appId, userId }) => {
+  const { isAuthenticated } = useAuth()
   return (
     <>
       <Metadata title="Events" description="Events page" />
 
-      <h1>EventsPage</h1>
-      <p>
-        Find me in <code>./web/src/pages/EventsPage/EventsPage.jsx</code>
-      </p>
-      {/*
-           My default route is named `events`, link to me with:
-           `<Link to={routes.events()}>Events</Link>`
-        */}
+      <div>Events</div>
+      <div className="">
+        {/* <WebhookEventsOfAnOrgCell organizationId={appId} /> */}
+        {isAuthenticated ? (
+          <WhOrgEventStreamer organizationId={appId} />
+        ) : (
+          <>
+            <SignUpLogIn />
+          </>
+        )}
+      </div>
     </>
   )
 }

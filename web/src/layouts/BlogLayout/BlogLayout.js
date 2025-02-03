@@ -1,100 +1,51 @@
-import { Link, routes } from '@redwoodjs/router'
+import { Toaster } from '@redwoodjs/web/toast'
 
 import { useAuth } from 'src/auth'
+import LoggedInDisplayUserName from 'src/components/Menu/LoggedInDisplayUserName/LoggedInDisplayUserName'
+import MasterNav from 'src/components/Menu/MasterNav/MasterNav'
 import MenuSidebar from 'src/components/Menu/MenuSidebar/MenuSidebar'
-
+import OrganizationHeader from 'src/components/Menu/OrganizationHeader/OrganizationHeader'
+import VersionTopRightCorner from 'src/components/Menu/VersionTopRightCorner/VersionTopRightCorner'
+import ShippyCloudHeader from 'src/components/shippyUi/ShippyCloudHeader/ShippyCloudHeader'
 const BlogLayout = ({ children }) => {
   const { logOut, isAuthenticated, currentUser } = useAuth()
 
   // console.log('children', children)
   return (
     <div className="w-full">
-      <header className="relative flex justify-between items-center py-4 px-8 bg-gradient-to-r from-blue-700 to-blue-800 via-blue-800 text-white">
-        <h1 className="text-5xl font-semibold tracking-tight">
-          <Link
-            className="text-blue-400 hover:text-blue-300 transition duration-100"
-            to={routes.home()}
-          >
-            Testycloud 1.0034
-          </Link>
-        </h1>
+      {' '}
+      <Toaster />
+      <header className="relative z-20 flex justify-between items-center pb-0 pt-0.5 px-8 bg-gradient-to-r from-blue-700 to-blue-800 via-blue-800 text-white">
+        <VersionTopRightCorner versionString={' v1.0034'} />
+        <ShippyCloudHeader />
         <nav>
-          <ul className="relative flex items-center font-light">
-            <li>
-              <Link
-                className="py-2 px-4 hover:bg-blue-600 transition duration-100 rounded"
-                to={routes.home()}
-              >
-                Dashboard
-              </Link>
-            </li>
-            <li>
-              <Link
-                className="py-2 px-4 hover:bg-blue-600 transition duration-100 rounded"
-                to={routes.about()}
-              >
-                About
-              </Link>
-            </li>
-            <li>
-              <Link
-                className="py-2 px-4 hover:bg-blue-600 transition duration-100 rounded"
-                to={routes.contact()}
-              >
-                Contact
-              </Link>
-            </li>
-
-            <li>
-              {isAuthenticated ? (
-                <div>
-                  <button
-                    type="button"
-                    onClick={logOut}
-                    className="py-2 px-4 hover:bg-blue-600 transition duration-100 rounded"
-                  >
-                    Logout
-                  </button>
-                </div>
-              ) : (
-                <Link to={routes.login()} className="py-2 px-4">
-                  Login
-                </Link>
-              )}
-            </li>
-          </ul>
-          {isAuthenticated && (
-            <div className="absolute bottom-1 right-0 mr-12 text-xs text-blue-300">
-              <div className="inline-flex items-center justify-center content-center">
-                <div className="inline-flex bg-white text-black px-1 rounded-3xl font-light">
-                  user:
-                </div>
-                <div className="inline-flex px-1 mb-0.5">
-                  {currentUser?.email}
-                </div>
-              </div>
-            </div>
-          )}
+          <MasterNav isAuthenticated={isAuthenticated} logOut={logOut} />
+          {
+            <LoggedInDisplayUserName
+              isAuthenticated={isAuthenticated}
+              currentUser={currentUser}
+            />
+          }
         </nav>
+        {children?.props?.params?.appId && (
+          <OrganizationHeader
+            displayName={children?.props?.params?.appId || ''}
+          />
+        )}
       </header>
-
       {/* only if authenticated AND there is an appId do we show the organization */}
       {isAuthenticated && children?.props?.params?.appId ? (
-        <main>
-          <div className="flex justify-between items-center pb-1 font-thin text-xs px-8 bg-gradient-to-r from-blue-700 to-blue-800 via-blue-800 text-white">
-            <div className="">
-              <div className="inline-flex px-1">Organization: </div>
-              <div className="inline-flex px-1">
-                {children?.props?.params?.appId || 'whhjoio'}
-              </div>
-            </div>
-          </div>{' '}
-          <MenuSidebar
-            appId={children?.props?.params?.appId}
-            userId={currentUser?.id}
-          />
-          <div className="max-w-7xl mx-auto bg-white shadow rounded-b">
-            {children}
+        <main className="relative flex">
+          <div className="fixed 2xl:top-[100px] left-0 h-[calc(100vh-88px)] z-20">
+            <MenuSidebar
+              appId={children?.props?.params?.appId}
+              userId={currentUser?.id}
+              logOut={logOut}
+            />
+          </div>
+
+          <div className="flex-1 ml-12 p-6">
+            <div className="bg-white shadow rounded-b">{children}</div>
           </div>
         </main>
       ) : (

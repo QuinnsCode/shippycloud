@@ -8,12 +8,14 @@ import services from 'src/services/**/*.{js,ts}'
 import { getCurrentUser } from 'src/lib/auth'
 import { db } from 'src/lib/db'
 import { logger } from 'src/lib/logger'
+import { realtime } from 'src/lib/realtime'
 
 export const handler = createGraphQLHandler({
   authDecoder,
   loggerConfig: { logger, options: {} },
   getCurrentUser,
   directives,
+  realtime,
   sdls,
   services,
   cors: {
@@ -21,6 +23,8 @@ export const handler = createGraphQLHandler({
     origin: ['https://shippycloud.com', 'http://shippycloud.com'],
     credentials: true,
   },
+  allowIntrospection: true,
+
   onException: () => {
     // Disconnect from your database with an unhandled exception.
     db.$disconnect()

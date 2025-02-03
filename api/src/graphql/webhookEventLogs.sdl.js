@@ -1,3 +1,5 @@
+import { gql } from 'graphql-tag'
+
 export const schema = gql`
   type WebhookEventLog {
     id: String!
@@ -12,6 +14,10 @@ export const schema = gql`
   type Query {
     webhookEventLogs: [WebhookEventLog!]! @requireAuth
     webhookEventLog(id: String!): WebhookEventLog @requireAuth
+    webhookEventLogsOfAnOrg(organizationId: String!): [WebhookEventLog!]!
+      @requireAuth
+    liveWebhookEventLogsOfAnOrg(organizationId: String!): [WebhookEventLog!]!
+      @requireAuth
   }
 
   input CreateWebhookEventLogInput {

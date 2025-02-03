@@ -11,6 +11,7 @@ export const schema = gql`
   type Query {
     orderDatas: [OrderData!]! @requireAuth
     orderData(id: String!): OrderData @requireAuth
+    orderDataOfAnOrg(organizationId: String!): [OrderData!]! @requireAuth
   }
 
   input CreateOrderDataInput {

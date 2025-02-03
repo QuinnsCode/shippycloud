@@ -1,6 +1,5 @@
 import { routes } from '@redwoodjs/router'
 
-import OrganizationCell from 'src/components/Organization/OrganizationCell'
 import OrganizationOfAUserCell from 'src/components/OrganizationOfAUserCell/OrganizationOfAUserCell'
 
 const AppBoard = ({ appId, currentUser }) => {

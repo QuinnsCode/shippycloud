@@ -1,4 +1,4 @@
-import { logger } from 'src/lib/logger'
+// const liveQueryStore = createLiveQueryStore()
 
 /**
  * The handler function is your code that processes http request events.
@@ -16,10 +16,11 @@ import { logger } from 'src/lib/logger'
  * @param { Context } _context - contains information about the invocation,
  * function, and execution environment.
  */
+
 import { organization } from 'src/services/organizations/organizations'
 import { createWebhookEventLog } from 'src/services/webhookEventLogs/webhookEventLogs'
 
-export const handler = async (event, context) => {
+export const handler = async (event, incomingContext) => {
   // console.log('Handler called with: ' + event.path) // Debug log
 
   // console.log('Received request:', {

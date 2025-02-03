@@ -101,10 +101,12 @@ export const hasRole = (roles) => {
  */
 export const requireAuth = ({ roles } = {}) => {
   if (!isAuthenticated()) {
-    throw new AuthenticationError("You don't have permission to do that.")
+    throw new AuthenticationError('Login to ShippyCloud to continue.')
   }
 
   if (roles && !hasRole(roles)) {
-    throw new ForbiddenError("You don't have access to do that.")
+    throw new ForbiddenError(
+      "You don't quite have the correct access to do that. Consult your organization's lead to give you updated permissions if needing more access or go to Roles menu.'"
+    )
   }
 }

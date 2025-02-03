@@ -11,7 +11,6 @@ import { Router, Route, Private, Set } from '@redwoodjs/router'
 
 import { useAuth } from 'src/auth'
 import BlogLayout from 'src/layouts/BlogLayout'
-import OrganizationLayout from 'src/layouts/OrganizationLayout'
 import ScaffoldLayout from 'src/layouts/ScaffoldLayout'
 
 const Routes = () => {
@@ -58,6 +57,9 @@ const Routes = () => {
           <Route path="/endpoints/{id}" page={EndpointEndpointPage} name="endpoint" />
           <Route path="/endpoints" page={EndpointEndpointsPage} name="endpoints" />
         </Set>
+
+        <Route path="/settings" page={SettingsPage} name="settings" />
+
         <Route path="/orders/{appId:String,userId:String}" page={OrdersPage} name="ordersOfAnOrg" />
         <Route path="/events/{appId:String,userId:String}" page={EventsPage} name="eventsOfAnOrg" />
         <Route path="/a/{appId:String}" page={HomePage} name="homeWithAppId" />
