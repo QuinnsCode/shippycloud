@@ -2,10 +2,11 @@ import { Link, routes, navigate } from '@redwoodjs/router'
 import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
 
-import EndpointsOfAnOrganizationCell from 'src/components/Endpoint/EndpointsOfAnOrganizationCell/EndpointsOfAnOrganizationCell'
 import OrganizationMembers from 'src/components/OrganizationMembers/OrganizationMembers'
 import OrganizationSettings from 'src/components/OrganizationSettings/OrganizationSettings'
-import { timeTag } from 'src/lib/formatters'
+import OrgTile from 'src/components/shippyUi/OrgTile/OrgTile'
+
+import ShippyCloudBanner from '../shippyUi/ShippyCloudBanner/ShippyCloudBanner'
 
 const DELETE_ORGANIZATION_MUTATION = gql`
   mutation DeleteOrganizationMutation2($id: String!) {
@@ -39,14 +40,14 @@ const OrganizationOfUser = ({ organization, returnToWhere }) => {
 
   return (
     <>
-      <div className="rw-segment">
+      <div className="rw-segment w-full">
         <OrgTile key={'orgTile1'}>
-          <p>Members</p>
+          <ShippyCloudBanner>Members</ShippyCloudBanner>
           <OrganizationMembers members={organization.members} />
         </OrgTile>
         <OrgTile key={'orgTile2'}>
           <div className="w-full items-center justify-center">
-            <div className="w-full">Settings</div>
+            <ShippyCloudBanner>Settings</ShippyCloudBanner>
             <div className="w-full">
               <OrganizationSettings
                 id={organization.id}
@@ -55,27 +56,10 @@ const OrganizationOfUser = ({ organization, returnToWhere }) => {
             </div>
           </div>
         </OrgTile>
-        <OrgTile key={'orgTile3'}>
-          <p>Endpoints</p>
-
-          <EndpointsOfAnOrganizationCell organizationId={organization.id} />
-        </OrgTile>
-        {/* <OrgTile key={'orgTile4'}>
-          <p>Events</p>
-          <WebhookEvents events={organization.webhooksEventLogs} />
-        </OrgTile> */}
 
         <div className="my-8"></div>
       </div>
     </>
-  )
-}
-
-const OrgTile = ({ children }) => {
-  return (
-    <div className="w-full border-2 border-black rounded-3xl p-4 items-center justify-center">
-      <div className="w-full items-center justify-center">{children}</div>
-    </div>
   )
 }
 

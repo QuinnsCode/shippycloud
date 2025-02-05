@@ -58,6 +58,9 @@ const Routes = () => {
           <Route path="/endpoints" page={EndpointEndpointsPage} name="endpoints" />
         </Set>
 
+        <Route path="/blog" page={BlogPage} name="blog" />
+        <Route path="/docs" page={DocsPage} name="docs" />
+        <Route path="/organization-members" page={OrganizationMembersPage} name="organizationMembers" />
         <Route path="/settings" page={SettingsPage} name="settings" />
 
         <Route path="/orders/{appId:String,userId:String}" page={OrdersPage} name="ordersOfAnOrg" />

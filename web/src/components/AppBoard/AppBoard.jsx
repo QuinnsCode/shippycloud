@@ -5,10 +5,10 @@ import OrganizationOfAUserCell from 'src/components/OrganizationOfAUserCell/Orga
 const AppBoard = ({ appId, currentUser }) => {
   console.log('appId: ', appId, 'currentUser: ', currentUser)
   return (
-    <div className="w-full my-24">
+    <div className="w-full">
       {/* <div className="w-full my-24">{appId}</div> */}
 
-      <div className="w-full my-24">
+      <div className="w-full">
         <OrganizationOfAUserCell
           id={appId}
           userId={currentUser?.id}

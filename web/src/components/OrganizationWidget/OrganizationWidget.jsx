@@ -1,10 +1,10 @@
 import AppBoard from 'src/components/AppBoard/AppBoard'
 import OrganizationWidgetCell from 'src/components/OrganizationWidgetCell/OrganizationWidgetCell'
-
+import ShippyCloudColorfulBackground from 'src/components/shippyUi/ShippyCloudColorfulBackground/ShippyCloudColorfulBackground'
 // show nothing if not logged in
 const OrganizationWidget = ({ appId, currentUser }) => {
   return (
-    <div className="border-2 border-black w-full">
+    <ShippyCloudColorfulBackground>
       {currentUser?.id ? (
         <div className="w-full">
           {appId ? (
@@ -21,7 +21,7 @@ const OrganizationWidget = ({ appId, currentUser }) => {
       ) : (
         <></>
       )}
-    </div>
+    </ShippyCloudColorfulBackground>
   )
 }
 

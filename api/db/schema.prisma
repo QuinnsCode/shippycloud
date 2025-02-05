@@ -53,6 +53,26 @@ model OrganizationMember {
   @@unique([userId, organizationId]) // Each user can only have one role per tenant
 }
 
+model OrganizationApiKey {
+  id             String       @id @default(uuid())
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  organizationId String
+  provider       String // e.g., 'SHIPSTATION', 'SHOPIFY', etc.
+  label          String? // Optional descriptive label for the key
+  encryptedKey   String // Encrypted API key
+  keyIv          String // Initialization vector for encryption
+  keyTag         String // Authentication tag for encryption
+  keySalt        String // Salt for encryption
+  isActive       Boolean      @default(true)
+  lastUsedAt     DateTime?
+  createdBy      String // userId of the creator
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+
+  @@unique([organizationId, provider])
+  @@index([provider])
+}
+
 model Organization {
   id                   String               @id @default(uuid())
   name                 String
@@ -61,6 +81,7 @@ model Organization {
   webhooksEventLogs    WebhookEventLog[] // Example of tenant-specific data
   orderData            OrderData[] // Example of tenant-specific data
   endpoints            Endpoint[] // Example of tenant-specific data
+  apiKeys              OrganizationApiKey[]
   organizationSettings String?              @default("")
   createdAt            DateTime             @default(now())
   updatedAt            DateTime             @updatedAt

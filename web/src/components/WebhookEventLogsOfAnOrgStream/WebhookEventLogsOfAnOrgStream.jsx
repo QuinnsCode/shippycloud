@@ -194,36 +194,38 @@ const WebhookEventLogsOfAnOrgStream = ({ initialLogs, organizationId }) => {
 
 const TesterEventCreater = ({ handleCreateWebhookEvent }) => {
   return (
-    <div className="p-4 bg-gray-800 flex space-x-2">
-      <input
-        type="text"
-        placeholder="Event"
-        id="event-input"
-        className="flex-grow p-2 bg-gray-700 text-white"
-      />
-      <input
-        type="text"
-        placeholder="Source"
-        id="source-input"
-        className="flex-grow p-2 bg-gray-700 text-white"
-      />
-      <input
-        type="text"
-        placeholder="Payload"
-        id="payload-input"
-        className="flex-grow p-2 bg-gray-700 text-white"
-      />
-      <button
-        onClick={() => {
-          const event = document.getElementById('event-input').value
-          const source = document.getElementById('source-input').value
-          const payload = document.getElementById('payload-input').value
-          handleCreateWebhookEvent(event, source, payload)
-        }}
-        className="bg-blue-500 text-white p-2 rounded"
-      >
-        Create Event
-      </button>
+    <div className="">
+      <div className="p-2 bg-gray-800 space-y-1 space-x-2 items-center justify-center md:inline-flex">
+        <input
+          type="text"
+          placeholder="Event"
+          id="event-input"
+          className="flex-grow p-2 bg-gray-700 text-white"
+        />
+        <input
+          type="text"
+          placeholder="Source"
+          id="source-input"
+          className="flex-grow p-2 bg-gray-700 text-white"
+        />
+        <input
+          type="text"
+          placeholder="Payload"
+          id="payload-input"
+          className="flex-grow p-2 bg-gray-700 text-white"
+        />
+        <button
+          onClick={() => {
+            const event = document.getElementById('event-input').value
+            const source = document.getElementById('source-input').value
+            const payload = document.getElementById('payload-input').value
+            handleCreateWebhookEvent(event, source, payload)
+          }}
+          className="bg-gradient-to-r from-sky-500 via-sky-600 to-sky-500 text-white hover:from-sky-600 hover:via-blue-500 hover:to-sky-600 hover:text-white p-2 rounded"
+        >
+          Create Event
+        </button>
+      </div>
     </div>
   )
 }
