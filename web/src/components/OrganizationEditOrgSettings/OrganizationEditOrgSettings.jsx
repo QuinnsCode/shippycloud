@@ -2,7 +2,10 @@ import { navigate, routes } from '@redwoodjs/router'
 import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
 
-import OrganizationSettingsForm from 'src/components/Organization/OrganizationSettingsForm'
+import GenerateOrgApiKeyForm from 'src/components/OrganizationWidgets/GenerateOrgApiKeyForm/GenerateOrgApiKeyForm'
+
+import ShippyCloudBanner from '../shippyUi/ShippyCloudBanner/ShippyCloudBanner'
+// import OrganizationSettingsForm from 'src/components/Organization/OrganizationSettingsForm'
 
 const UPDATE_ORGANIZATION_MUTATION = gql`
   mutation UpdateOrganizationMutation(
@@ -46,18 +49,19 @@ const OrganizationEditOrgSettings = ({ id, organizationSettings }) => {
     <div className="rw-segment">
       <header className="rw-segment-header">
         <div className="rw-heading font-thin rw-heading-secondary">
-          Edit Organization Settings: {id}
+          <ShippyCloudBanner>ADD API KEYs: {id}</ShippyCloudBanner>
         </div>
       </header>
 
       <div className="rw-segment-main">
-        <OrganizationSettingsForm
+        {/* <OrganizationSettingsForm
           organizationSettings={organizationSettings}
           orgId={id}
           onSave={onSave}
           error={error}
           loading={loading}
-        />
+        /> */}
+        <GenerateOrgApiKeyForm organizationId={id} />
       </div>
     </div>
   )

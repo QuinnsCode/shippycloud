@@ -15,9 +15,13 @@ import { toast, Toaster } from '@redwoodjs/web/toast'
 
 import { useAuth } from 'src/auth'
 import SignUp from 'src/components/AuthButtons/SignUp/SignUp'
+import ShippyCloudBanner from 'src/components/shippyUi/ShippyCloudBanner/ShippyCloudBanner'
 
 const LoginPage = () => {
   const { isAuthenticated, logIn } = useAuth()
+
+  const normalButtonString =
+    'rw-button bg-gradient-to-br from-blue-500 via-sky-600  to-blue-700 hover:bg-gradient-to-br hover:from-blue-500 hover:via-sky-700 hover:to-blue-600 text-white font-bold rounded-lg focus:outline-none focus:shadow-outline w-full'
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -33,7 +37,7 @@ const LoginPage = () => {
   const onSubmit = async (data) => {
     const response = await logIn({ ...data })
 
-    console.log({response})
+    console.log({ response })
 
     if (response.message) {
       toast(response.message)
@@ -56,7 +60,9 @@ const LoginPage = () => {
         <div className="rw-scaffold rw-login-container">
           <div className="rw-segment">
             <header className="rw-segment-header">
-              <h2 className="rw-heading rw-heading-secondary">Login</h2>
+              <h2 className="rw-heading rw-heading-secondary">
+                <ShippyCloudBanner>Login</ShippyCloudBanner>
+              </h2>
             </header>
 
             <div className="rw-segment-main">
@@ -116,7 +122,7 @@ const LoginPage = () => {
                   <FieldError name="password" className="rw-field-error" />
 
                   <div className="rw-button-group">
-                    <Submit className="rw-button rw-button-blue">Login</Submit>
+                    <Submit className={`${normalButtonString}`}>Submit</Submit>
                   </div>
                 </Form>
               </div>

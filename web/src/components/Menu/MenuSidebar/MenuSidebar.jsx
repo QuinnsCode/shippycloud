@@ -41,6 +41,11 @@ const MenuSidebar = ({ userId, appId, memberId }) => {
   const bottomMenuItems = [
     { icon: ScrollText, label: 'Blog', path: routes.blog() },
     { icon: ScrollText, label: 'Docs', path: routes.docs() },
+    {
+      icon: Settings,
+      label: 'Settings',
+      path: routes.settingsOfAnOrg({ appId: appId, userId: userId }),
+    },
   ]
 
   //REFS

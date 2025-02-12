@@ -3,7 +3,7 @@ import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
 
 import OrganizationMembers from 'src/components/OrganizationMembers/OrganizationMembers'
-import OrganizationSettings from 'src/components/OrganizationSettings/OrganizationSettings'
+import OrganizationSettings from 'src/components/OrganizationWidgets/OrganizationSettings/OrganizationSettings'
 import OrgTile from 'src/components/shippyUi/OrgTile/OrgTile'
 
 import ShippyCloudBanner from '../shippyUi/ShippyCloudBanner/ShippyCloudBanner'

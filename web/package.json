@@ -16,11 +16,15 @@
     "@redwoodjs/realtime": "^8.5.0",
     "@redwoodjs/router": "8.5.0",
     "@redwoodjs/web": "8.5.0",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
     "humanize-string": "2.1.0",
-    "lucide-react": "^0.474.0",
+    "lucide-react": "^0.475.0",
     "prop-types": "15.8.1",
     "react": "18.3.1",
-    "react-dom": "18.3.1"
+    "react-dom": "18.3.1",
+    "tailwind-merge": "^3.0.1",
+    "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
     "@redwoodjs/vite": "8.5.0",

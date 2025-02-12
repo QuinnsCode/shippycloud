@@ -1,8 +1,13 @@
-const OrdersOfAnOrg = () => {
+import ShipstationFetcherCell from 'src/components/Shipstation/ShipstationFetcherCell/ShipstationFetcherCell'
+const OrdersOfAnOrg = ({ appId, userId }) => {
+  const resourceUrl =
+    'https://ssapi.shipstation.com/shipments?batchId=342961074&includeShipmentItems=False'
   return (
     <div>
-      <h2>{'OrdersOfAnOrg'}</h2>
-      <p>{'Find me in ./web/src/components/OrdersOfAnOrg/OrdersOfAnOrg.jsx'}</p>
+      <ShipstationFetcherCell
+        organizationId={appId}
+        shipstationUrl={resourceUrl}
+      />
     </div>
   )
 }

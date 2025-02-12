@@ -45,8 +45,6 @@ const WebhookEventLogsOfAnOrg = ({
     }
   )
 
-  console.log({ data })
-
   return (
     <div className="w-full bg-white">
       {webhookLogs?.map((event, index) => (

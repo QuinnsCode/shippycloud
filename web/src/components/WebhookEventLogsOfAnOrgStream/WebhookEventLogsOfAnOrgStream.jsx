@@ -99,16 +99,6 @@ const WebhookEventLogsOfAnOrgStream = ({ initialLogs, organizationId }) => {
 
   //METHODS
 
-  const renderWebhookLog = (log) => (
-    <ShippyWebhookEventCard
-      key={log.id}
-      index={log.virtualIndex}
-      event={log.event}
-      payload={log.payload}
-      source={log.source}
-    />
-  )
-
   const handleCreateWebhookEvent = (event, source, payload) => {
     createWebhookEventLog({
       variables: {
@@ -121,6 +111,17 @@ const WebhookEventLogsOfAnOrgStream = ({ initialLogs, organizationId }) => {
       },
     })
   }
+
+  const renderWebhookLog = (log) => (
+    <ShippyWebhookEventCard
+      key={log.id}
+      index={log.virtualIndex}
+      event={log.event}
+      payload={log.payload}
+      source={log.source}
+      openMoreInfo={log.openMoreInfo}
+    />
+  )
 
   //useEffects
 
@@ -152,24 +153,6 @@ const WebhookEventLogsOfAnOrgStream = ({ initialLogs, organizationId }) => {
     <div
       className={`flex flex-col h-full ${!isNewEventReceived ? 'bg-gray-900' : 'bg-gray-800'} transition-colors text-white duration-500`}
     >
-      {/* <div className="flex items-center gap-x-4 border-b border-gray-700 p-5">
-        <div className="rounded-full bg-blue-500 text-white p-2">
-          Webhook Logs
-        </div>
-        <h2 className="font-bold">Organization: {organizationId}</h2>
-      </div> */}
-      {/* <div id="webhook-log-container" className="flex-grow overflow-y-auto">
-        {webhookLogs?.map((log, index) => (
-          <ShippyWebhookEventCard
-            key={log.id}
-            index={index}
-            event={log.event}
-            payload={log.payload}
-            source={log.source}
-          />
-        ))}
-        <div id="webhook-scroll-anchor" />
-      </div> */}
       <TesterEventCreater handleCreateWebhookEvent={handleCreateWebhookEvent} />
       <div
         id="webhook-log-container"
@@ -178,9 +161,10 @@ const WebhookEventLogsOfAnOrgStream = ({ initialLogs, organizationId }) => {
       >
         <VirtualScrolling
           items={webhookLogs}
-          itemHeight={130} // Adjust based on your ShippyWebhookEventCard height
+          setItems={setWebhookLogs}
+          itemHeight={110} // Adjust based on your ShippyWebhookEventCard height
           renderItem={renderWebhookLog}
-          containerHeight={window.innerHeight * 0.75} // Adjust based on your layout
+          containerHeight={window.innerHeight * 0.8} // Adjust based on your layout
           overscan={5}
           renderedTopToBottom={listGoesTopToBottom} // Since Prisma is already reversing the list
           addNewToTop={addNewToTop} // New items are added to the top

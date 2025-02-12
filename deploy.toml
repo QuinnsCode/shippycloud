@@ -23,7 +23,7 @@ sides = ["api", "web"]
 packageManagerCommand = "yarn"
 monitorCommand = "pm2"
 path = "/var/www/app"
-processNames = ["api"]
+processNames = ["serve"]
 # Update the repo
 repo = "git@github.com:QuinnsCode/shippycloud.git"
 branch = "main"

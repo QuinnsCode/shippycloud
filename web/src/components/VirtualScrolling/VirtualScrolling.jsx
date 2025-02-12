@@ -1,11 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react'
 
+import HoverExpand from 'src/components/HoverExpand/HoverExpand'
 const VirtualScrolling = ({
   items,
+  setItems,
   itemHeight,
   renderItem,
   containerHeight,
-  overscan = 5,
+  overscan = 0,
   renderedTopToBottom = true,
   addNewToTop = true,
   scrollToTop = false, // New prop to signal scrolling to top
@@ -58,13 +60,28 @@ const VirtualScrolling = ({
       virtualIndex: startIndex + index,
     }))
 
+  const renderItemWithHover = (item) => {
+    const originalContent = renderItem(item)
+
+    // Wrap the content with HoverExpand
+    return (
+      <HoverExpand
+        enabled={item?.enabled || false}
+        containerRef={containerRef}
+        content={<HoverItemContent item={item} />}
+      >
+        {originalContent}
+      </HoverExpand>
+    )
+  }
+
   return (
     <div
       ref={containerRef}
       style={{ height: containerHeight, overflow: 'auto' }}
     >
       <div style={{ height: totalHeight, position: 'relative' }}>
-        {visibleItems.map((item, index) => (
+        {visibleItems?.map((item, index) => (
           <div
             key={item.id || index}
             style={{
@@ -72,11 +89,31 @@ const VirtualScrolling = ({
               top: item.virtualIndex * itemHeight,
               height: itemHeight,
               width: '99%',
+              marginLeft: '1px',
             }}
           >
-            {renderItem(item)}
+            {renderItemWithHover(item)}
           </div>
         ))}
+      </div>
+    </div>
+  )
+}
+
+const HoverItemContent = ({ item }) => {
+  return (
+    <div className="space-y-2">
+      <h3 className="font-bold text-lg">{item.event}</h3>
+      <div className="text-sm">
+        <p>
+          <span className="font-semibold">Source:</span> {item.source}
+        </p>
+        <p>
+          <span className="font-semibold">Payload:</span>
+        </p>
+        <pre className="bg-gray-900 text-white p-2 rounded mt-1 overflow-x-auto">
+          {JSON.stringify(item.payload, null, 2)}
+        </pre>
       </div>
     </div>
   )
