@@ -46,7 +46,7 @@ const WebhookEventLogsOfAnOrg = ({
   )
 
   return (
-    <div className="w-full bg-white">
+    <div className="">
       {webhookLogs?.map((event, index) => (
         <ShippyWebhookEventCard
           key={event.id}

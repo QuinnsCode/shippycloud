@@ -12,11 +12,13 @@ const EventsPage = ({ appId, userId }) => {
     <>
       <Metadata title="Events" description="Events page" />
 
-      <div>Events</div>
       <div className="">
         {/* <WebhookEventsOfAnOrgCell organizationId={appId} /> */}
         {isAuthenticated ? (
-          <WhOrgEventStreamer organizationId={appId} />
+          <>
+            <div>Events</div>
+            <WhOrgEventStreamer organizationId={appId} />
+          </>
         ) : (
           <>
             <SignUpLogIn />

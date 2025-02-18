@@ -11,8 +11,9 @@ import {
   ScrollText,
 } from 'lucide-react'
 
-import { Link, routes } from '@redwoodjs/router'
+import { routes } from '@redwoodjs/router'
 
+import ShippyMenuSidebarIconList from 'src/components/Menu/MenuSidebar/ShippyMenuSidebarIconList/ShippyMenuSidebarIconList'
 import { useOutsideClick } from 'src/hooks/useClickOutside'
 import { useEscapeKey } from 'src/hooks/useEscapeKey'
 
@@ -49,7 +50,7 @@ const MenuSidebar = ({ userId, appId, memberId }) => {
   ]
 
   //REFS
-  const sidebarMenuRef = useRef(null)
+  const mainMenuSidebarRef = useRef(null)
 
   //STATE
   const [isOpen, setIsOpen] = useState(false)
@@ -57,19 +58,21 @@ const MenuSidebar = ({ userId, appId, memberId }) => {
   const menuWidthString = isOpen ? 'w-14' : 'w-[12rem]'
 
   //FUNCTIONS
-  const handleClose = () => {
+  const handleMainMenuClose = () => {
+    // renamed from handleClose
     setIsOpen(true)
   }
 
   //HOOKS
-  useOutsideClick(handleClose, sidebarMenuRef)
-  useEscapeKey(handleClose)
+  useOutsideClick(handleMainMenuClose, mainMenuSidebarRef)
+  useEscapeKey(handleMainMenuClose)
 
   //EFFECTS
 
   return (
     <div
-      ref={sidebarMenuRef}
+      ref={mainMenuSidebarRef}
+      data-sidebar="main-menu"
       className={`inline-flex h-[calc(100vh-4.5rem)] flex-col opacity-90 bg-gradient-to-b from-sky-100 via-sky-100 to-blue-200 border-r border-gray-200 transition-all duration-300 ${
         menuWidthString
       }`}
@@ -81,9 +84,13 @@ const MenuSidebar = ({ userId, appId, memberId }) => {
           </p>
         )}{' '}
         <button
-          onClick={() => setIsOpen(!isOpen)}
+          onClick={(e) => {
+            e.stopPropagation()
+            setIsOpen(!isOpen)
+          }}
           className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
           aria-label={isOpen ? 'Expand sidebar' : 'Collapse sidebar'}
+          data-trigger="main-menu"
         >
           {!isOpen ? (
             <ChevronLeft className="w-5 h-5 text-gray-500" />
@@ -96,44 +103,18 @@ const MenuSidebar = ({ userId, appId, memberId }) => {
       <nav className="flex-1 overflow-y-auto">
         <ul className="flex flex-col h-full py-0">
           <div>
-            {menuItems.map((item) => {
-              const Icon = item.icon
-              return (
-                <li key={item.label}>
-                  <Link
-                    to={item.path}
-                    className="flex items-center px-4 py-3 text-gray-700 hover:bg-gray-100 transition-colors"
-                  >
-                    <Icon className="w-5 h-5 flex-shrink-0" />
-                    {!isOpen && (
-                      <span className="ml-3 whitespace-nowrap h-5">
-                        {item.label}
-                      </span>
-                    )}
-                  </Link>
-                </li>
-              )
-            })}
+            <ShippyMenuSidebarIconList
+              key="top"
+              items={menuItems}
+              isOpen={isOpen}
+            />
           </div>
           <div className="mt-auto">
-            {bottomMenuItems.map((item) => {
-              const Icon = item.icon
-              return (
-                <li key={item.label}>
-                  <Link
-                    to={item.path}
-                    className="flex items-center px-4 py-3 text-gray-700 hover:bg-gray-100 transition-colors"
-                  >
-                    <Icon className="w-5 h-5 flex-shrink-0" />
-                    {!isOpen && (
-                      <span className="ml-3 whitespace-nowrap h-5">
-                        {item.label}
-                      </span>
-                    )}
-                  </Link>
-                </li>
-              )
-            })}
+            <ShippyMenuSidebarIconList
+              key="bottom"
+              items={bottomMenuItems}
+              isOpen={isOpen}
+            />
           </div>
         </ul>
       </nav>

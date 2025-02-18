@@ -1,7 +1,7 @@
 import ShipstationFetcherCell from 'src/components/Shipstation/ShipstationFetcherCell/ShipstationFetcherCell'
 const OrdersOfAnOrg = ({ appId, userId }) => {
-  const resourceUrl =
-    'https://ssapi.shipstation.com/shipments?batchId=342961074&includeShipmentItems=False'
+  let resourceUrl =
+    'https://ssapi.shipstation.com/shipments?batchId=342961074&includeShipmentItems=True'
   return (
     <div>
       <ShipstationFetcherCell

@@ -119,7 +119,16 @@ const WebhookEventLogsOfAnOrgStream = ({ initialLogs, organizationId }) => {
       event={log.event}
       payload={log.payload}
       source={log.source}
-      openMoreInfo={log.openMoreInfo}
+      openMoreInfo={() => {
+        const url = JSON.parse(log.payload)?.resource_url
+        console.log(
+          'openMoreInfo',
+          fetch(url).then((res) => {
+            res.json()
+            console.log('res', res)
+          })
+        )
+      }}
     />
   )
 

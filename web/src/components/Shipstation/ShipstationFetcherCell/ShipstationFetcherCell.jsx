@@ -1,3 +1,5 @@
+import ShipstationShipmentCard from '../ShipstationShipmentCard/ShipstationShipmentCard'
+
 export const QUERY = gql`
   query GetShipstation($shipstationUrl: String!, $organizationId: String!) {
     shipders: getShipstation(
@@ -34,26 +36,18 @@ export const Success = ({ shipders }) => {
       ) : (
         <></>
       )}
+      {/* {!shipdersData?.orders && !shipdersData?.shipments && 'Somethiing'} */}
     </>
   )
 }
 
 const ShipstationShipments = ({ shipments }) => {
   return (
-    <div>
-      <h2>Shipments</h2>
+    <div className="mx-24">
+      <h2>Shipments - Fetcher cell</h2>
       {shipments?.map((shipment) => (
-        <ShipstationShipmentDisplay key={shipment.id} shipment={shipment} />
+        <ShipstationShipmentCard key={shipment.id} shipment={shipment} />
       ))}
-    </div>
-  )
-}
-
-const ShipstationShipmentDisplay = ({ shipment }) => {
-  return (
-    <div className="w-full border-b-2- border-black">
-      <h3>{shipment.id}</h3>
-      <p>{JSON.stringify(shipment)}</p>
     </div>
   )
 }
@@ -61,8 +55,8 @@ const ShipstationShipmentDisplay = ({ shipment }) => {
 const ShipstationOrders = ({ orders }) => {
   return (
     <div>
-      <h2>Orders</h2>
-      {orders.map((order) => (
+      <h2>Orders - Fetcher cell</h2>
+      {orders?.map((order) => (
         <div key={order.orderNumber}>
           <h3>{order.orderNumber}</h3>
           <p>{order.shipmentItems[0].item.name}</p>

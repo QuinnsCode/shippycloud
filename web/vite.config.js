@@ -1,5 +1,6 @@
 import dns from 'dns'
 
+import tailwindcss from 'tailwindcss'
 import { defineConfig } from 'vite'
 
 import redwood from '@redwoodjs/vite'
@@ -10,7 +11,7 @@ dns.setDefaultResultOrder('verbatim')
 
 /** @type {import('vite').UserConfig} */
 const viteConfig = {
-  plugins: [redwood()],
+  plugins: [redwood(), tailwindcss()],
   server: {
     allowedHosts: ['localhost', '.ngrok-free.app'],
   },

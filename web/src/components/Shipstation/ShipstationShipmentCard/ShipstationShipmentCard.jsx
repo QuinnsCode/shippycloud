@@ -15,7 +15,7 @@ import {
   TableRow,
 } from 'src/components/ui/table'
 
-const ShipstationShipmentCard = ({ data }) => {
+const ShipstationShipmentCard = ({ shipment }) => {
   // Helper function to format dates
   const formatDate = (dateString) => {
     return new Date(dateString).toLocaleDateString('en-US', {
@@ -46,33 +46,33 @@ const ShipstationShipmentCard = ({ data }) => {
             <TableBody>
               <TableRow>
                 <TableCell className="font-medium">Shipment ID</TableCell>
-                <TableCell>{data.shipmentId}</TableCell>
+                <TableCell>{shipment?.shipmentId}</TableCell>
                 <TableCell className="font-medium">Order Number</TableCell>
-                <TableCell>{data.orderNumber}</TableCell>
+                <TableCell>{shipment.orderNumber}</TableCell>
               </TableRow>
               <TableRow>
                 <TableCell className="font-medium">Create Date</TableCell>
-                <TableCell>{formatDate(data.createDate)}</TableCell>
+                <TableCell>{formatDate(shipment.createDate)}</TableCell>
                 <TableCell className="font-medium">Ship Date</TableCell>
-                <TableCell>{data.shipDate}</TableCell>
+                <TableCell>{shipment.shipDate}</TableCell>
               </TableRow>
               <TableRow>
                 <TableCell className="font-medium">Tracking Number</TableCell>
-                <TableCell>{data.trackingNumber}</TableCell>
+                <TableCell>{shipment.trackingNumber}</TableCell>
                 <TableCell className="font-medium">Carrier</TableCell>
-                <TableCell>{data.carrierCode}</TableCell>
+                <TableCell>{shipment.carrierCode}</TableCell>
               </TableRow>
               <TableRow>
                 <TableCell className="font-medium">Service</TableCell>
-                <TableCell>{data.serviceCode}</TableCell>
+                <TableCell>{shipment.serviceCode}</TableCell>
                 <TableCell className="font-medium">Status</TableCell>
-                <TableCell>{data.voided ? 'Voided' : 'Active'}</TableCell>
+                <TableCell>{shipment.voided ? 'Voided' : 'Active'}</TableCell>
               </TableRow>
               <TableRow>
                 <TableCell className="font-medium">Shipment Cost</TableCell>
-                <TableCell>{formatCurrency(data.shipmentCost)}</TableCell>
+                <TableCell>{formatCurrency(shipment.shipmentCost)}</TableCell>
                 <TableCell className="font-medium">Insurance Cost</TableCell>
-                <TableCell>{formatCurrency(data.insuranceCost)}</TableCell>
+                <TableCell>{formatCurrency(shipment.insuranceCost)}</TableCell>
               </TableRow>
             </TableBody>
           </Table>
@@ -88,28 +88,28 @@ const ShipstationShipmentCard = ({ data }) => {
             <TableBody>
               <TableRow>
                 <TableCell className="font-medium">Name</TableCell>
-                <TableCell>{data.shipTo.name}</TableCell>
+                <TableCell>{shipment.shipTo.name}</TableCell>
                 <TableCell className="font-medium">Company</TableCell>
-                <TableCell>{data.shipTo.company || 'N/A'}</TableCell>
+                <TableCell>{shipment.shipTo.company || 'N/A'}</TableCell>
               </TableRow>
               <TableRow>
                 <TableCell className="font-medium">Address</TableCell>
                 <TableCell colSpan="3">
-                  {data.shipTo.street1}
-                  {data.shipTo.street2 && <br />}
-                  {data.shipTo.street2}
+                  {shipment.shipTo.street1}
+                  {shipment.shipTo.street2 && <br />}
+                  {shipment.shipTo.street2}
                   <br />
-                  {data.shipTo.city}, {data.shipTo.state}{' '}
-                  {data.shipTo.postalCode}
+                  {shipment.shipTo.city}, {shipment.shipTo.state}{' '}
+                  {shipment.shipTo.postalCode}
                   <br />
-                  {data.shipTo.country}
+                  {shipment.shipTo.country}
                 </TableCell>
               </TableRow>
               <TableRow>
                 <TableCell className="font-medium">Phone</TableCell>
-                <TableCell>{data.shipTo.phone}</TableCell>
+                <TableCell>{shipment.shipTo.phone}</TableCell>
                 <TableCell className="font-medium">Email</TableCell>
-                <TableCell>{data.customerEmail}</TableCell>
+                <TableCell>{shipment.customerEmail}</TableCell>
               </TableRow>
             </TableBody>
           </Table>
@@ -126,12 +126,12 @@ const ShipstationShipmentCard = ({ data }) => {
               <TableRow>
                 <TableCell className="font-medium">Weight</TableCell>
                 <TableCell>
-                  {data.weight.value} {data.weight.units}
+                  {shipment.weight.value} {shipment.weight.units}
                 </TableCell>
                 <TableCell className="font-medium">Dimensions</TableCell>
                 <TableCell>
-                  {data.dimensions.length} x {data.dimensions.width} x{' '}
-                  {data.dimensions.height} {data.dimensions.units}
+                  {shipment.dimensions.length} x {shipment.dimensions.width} x{' '}
+                  {shipment.dimensions.height} {shipment.dimensions.units}
                 </TableCell>
               </TableRow>
               <TableRow>
@@ -139,11 +139,11 @@ const ShipstationShipmentCard = ({ data }) => {
                   Insurance Provider
                 </TableCell>
                 <TableCell>
-                  {data.insuranceOptions.provider || 'None'}
+                  {shipment.insuranceOptions.provider || 'None'}
                 </TableCell>
                 <TableCell className="font-medium">Insured Value</TableCell>
                 <TableCell>
-                  {formatCurrency(data.insuranceOptions.insuredValue)}
+                  {formatCurrency(shipment.insuranceOptions.insuredValue)}
                 </TableCell>
               </TableRow>
             </TableBody>
