@@ -2,7 +2,7 @@ const SidebarContentHandler = ({ sidebarContent, sidebarType }) => {
   if (sidebarType === 'shipstation-event') {
     return <ShipstationPayloadSidebarContent sidebarContent={sidebarContent} />
   } else {
-    return <div>No sidebar content</div>
+    return <div></div>
   }
 }
 

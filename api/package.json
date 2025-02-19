@@ -8,6 +8,7 @@
     "@redwoodjs/auth-dbauth-api": "8.5.0",
     "@redwoodjs/graphql-server": "8.5.0",
     "@redwoodjs/realtime": "8.5.0",
-    "ioredis": "^5"
+    "ioredis": "^5",
+    "posthog-node": "^4.6.0"
   }
 }

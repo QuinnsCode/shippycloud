@@ -1,3 +1,5 @@
+import PostHogTestButton from 'src/components/PostHogTestButton/PostHogTestButton'
+
 import ShipstationShipmentCard from '../ShipstationShipmentCard/ShipstationShipmentCard'
 
 export const QUERY = gql`
@@ -23,9 +25,12 @@ export const Failure = ({ error }) => (
 
 export const Success = ({ shipders }) => {
   const shipdersData = JSON.parse(shipders?.data)
-  console.log({ shipdersData })
+  // console.log({ shipdersData })
   return (
     <>
+      <div className="w-full">
+        <PostHogTestButton />
+      </div>
       {shipdersData?.shipments ? (
         <ShipstationShipments shipments={shipdersData?.shipments} />
       ) : (
