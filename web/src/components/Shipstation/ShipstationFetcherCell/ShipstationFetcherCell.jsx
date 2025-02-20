@@ -1,17 +1,10 @@
 import PostHogTestButton from 'src/components/PostHogTestButton/PostHogTestButton'
+import { ShipstationQueries } from 'src/gql/shipstation'
 
+import ShipstationOrderCard from '../ShipstationOrderCard/ShipstationOrderCard'
 import ShipstationShipmentCard from '../ShipstationShipmentCard/ShipstationShipmentCard'
 
-export const QUERY = gql`
-  query GetShipstation($shipstationUrl: String!, $organizationId: String!) {
-    shipders: getShipstation(
-      shipstationUrl: $shipstationUrl
-      organizationId: $organizationId
-    ) {
-      data
-    }
-  }
-`
+export const QUERY = ShipstationQueries.GET_SHIPSTATION
 
 export const Loading = ({ organizationId }) => (
   <div>Loading {organizationId}...</div>
@@ -28,9 +21,7 @@ export const Success = ({ shipders }) => {
   // console.log({ shipdersData })
   return (
     <>
-      <div className="w-full">
-        <PostHogTestButton />
-      </div>
+      <div className="w-full">{/* <PostHogTestButton /> */}</div>
       {shipdersData?.shipments ? (
         <ShipstationShipments shipments={shipdersData?.shipments} />
       ) : (
@@ -59,13 +50,13 @@ const ShipstationShipments = ({ shipments }) => {
 
 const ShipstationOrders = ({ orders }) => {
   return (
-    <div>
-      <h2>Orders - Fetcher cell</h2>
+    <div className="w-full">
       {orders?.map((order) => (
-        <div key={order.orderNumber}>
-          <h3>{order.orderNumber}</h3>
-          <p>{order.shipmentItems[0].item.name}</p>
-        </div>
+        <>
+          {order?.orderId !== null && order?.orderId !== undefined && (
+            <ShipstationOrderCard key={order.orderId} order={order} />
+          )}
+        </>
       ))}
     </div>
   )

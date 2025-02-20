@@ -29,6 +29,12 @@ const BlogLayout = ({ children }) => {
   const shouldShowMenuForNoOrgId =
     !isAuthenticated && children?.props?.path?.includes('blog')
 
+  const orgName = window?.orgName
+  // alert(orgName)
+  // if (!orgName) {
+  //   orgName = children?.props?.params?.appId
+  // }
+
   return (
     <div className="flex flex-col min-h-screen overflow-x-hidden">
       <Toaster />
@@ -44,9 +50,7 @@ const BlogLayout = ({ children }) => {
           />
         </nav>
         {children?.props?.params?.appId && (
-          <OrganizationHeader
-            displayName={children?.props?.params?.appId || ''}
-          />
+          <OrganizationHeader displayName={orgName || ''} />
         )}
       </header>
 
@@ -80,9 +84,6 @@ const BlogLayout = ({ children }) => {
               logOut={logOut}
             />
           </aside>
-          {/* <aside className="fixed right-0 h-[calc(100vh-4rem)] z-20 w-[8rem]">
-            CONTEEEEEENT
-          </aside> */}
           <main className="flex-1 ml-0 pl-0 overflow-y-auto">
             <div className="bg-white shadow rounded-b fixed left-16 w-[calc(100vw-4.5rem)]">
               {children}

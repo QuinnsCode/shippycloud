@@ -6,9 +6,18 @@ const useUserSettings = (initialSettings, updateUserSettingsInDB) => {
 
   useEffect(() => {
     try {
-      const parsedSettings = JSON.parse(initialSettings || '{}')
-      setCurrentSettings(parsedSettings)
-      setBackupSettings(parsedSettings)
+      let s = initialSettings
+
+      if (initialSettings === null || initialSettings === undefined) {
+        s = {}
+      }
+
+      if (typeof initialSettings === 'string') {
+        s = JSON.parse(initialSettings)
+      }
+
+      setCurrentSettings(s)
+      setBackupSettings(s)
     } catch (error) {
       console.error('Invalid initial settings JSON:', error)
       setCurrentSettings({})
@@ -21,11 +30,12 @@ const useUserSettings = (initialSettings, updateUserSettingsInDB) => {
 
     try {
       const newSettings = { ...currentSettings, [key]: value }
-      const validJSON = JSON.stringify(newSettings)
-      JSON.parse(validJSON) // Test if it's valid JSON
+      const validifiedJsonString = JSON.stringify(newSettings)
+      JSON.parse(validifiedJsonString) // Test if it's valid JSON
 
       setCurrentSettings(newSettings)
-      const success = await updateUserSettingsInDB(validJSON)
+
+      const success = await updateUserSettingsInDB(validifiedJsonString)
 
       if (success) {
         setBackupSettings(newSettings)

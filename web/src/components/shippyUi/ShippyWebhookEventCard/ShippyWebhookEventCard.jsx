@@ -1,7 +1,10 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
+
+import { useQuery } from '@redwoodjs/web'
 
 import ShippyBottomBorder from 'src/components/shippyUi/ShippyBottomBorder'
-import ShipstationFetcherCell from 'src/components/Shipstation/ShipstationFetcherCell/ShipstationFetcherCell'
+// import ShipstationFetcherCell from 'src/components/Shipstation/ShipstationFetcherCell/ShipstationFetcherCell'
+import { ShipstationQueries } from 'src/gql/shipstation'
 import { useSidebarState } from 'src/hooks/useSidebarState'
 
 const ShippyWebhookEventCard = ({
@@ -10,6 +13,7 @@ const ShippyWebhookEventCard = ({
   source,
   index,
   openMoreInfo,
+  organizationId,
 }) => {
   const payloadParsed = JSON.parse(payload)
   const shipstationUrl = payloadParsed?.resource_url
@@ -18,8 +22,28 @@ const ShippyWebhookEventCard = ({
 
   const { updateSidebar } = useSidebarState()
 
+  const { data, loading, error } = useQuery(
+    ShipstationQueries.GET_SHIPSTATION,
+    {
+      variables: { shipstationUrl, organizationId },
+    }
+  )
+
+  if (loading) return <div>Loading...</div>
+  if (error) return <div>Error: {error.message}</div>
+
+  const shipdersStr = data?.shipders?.data
+  const shipders = JSON.parse(shipdersStr)
+  const prettyJSON = JSON.stringify(shipders, null, 2)
+  const prettyJSONwArray = prettyJSON.replace(/}/g, '},\n')
+
   const handleOpenMoreInfo = (payload) => {
-    updateSidebar('shipstation-event', JSON.stringify(payload))
+    updateSidebar(
+      'shipstation-event',
+      <div className="p-2 whitespace-pre-wrap rounded-[2rem] font-thin font-sans bg-gradient-to-br from-sky-50 via-blue-50 to-blue-100 text-blue-900 h-[calc(100vh-10rem)] overflow-scroll">
+        {prettyJSONwArray.replace(/\[/g, '\n[')}
+      </div>
+    )
   }
   // useEffect(() => {
   //   updateSidebarContent(<div>New content</div>)

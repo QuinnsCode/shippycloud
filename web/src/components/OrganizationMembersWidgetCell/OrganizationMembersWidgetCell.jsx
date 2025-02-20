@@ -27,7 +27,7 @@ export const Failure = ({ error }) => (
   <div style={{ color: 'red' }}>Error: {error?.message}</div>
 )
 
-export const Success = ({ organization, appId }) => {
+export const Success = ({ organization, appId, currentUser }) => {
   return (
     <div>
       <OrganizationMemberList members={organization.members} appId={appId} />

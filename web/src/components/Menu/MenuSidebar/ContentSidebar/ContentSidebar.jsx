@@ -29,6 +29,7 @@ const ContentSidebar = ({ appId }) => {
     quarter: 'w-[25rem] sm:w=[10rem]',
   }
 
+  //these are the eventual settings for the user to remember between sessions
   const userSettings = {
     contentSidebarWidth: ['full', 'half', 'quarter'],
     contentBarClosesOnEscape: [true, false],
@@ -37,7 +38,7 @@ const ContentSidebar = ({ appId }) => {
     smallText: [false, true],
   }
 
-  const menuWidthString = isOpen ? 'w-[4rem]' : widOpts.half
+  const menuWidthString = isOpen ? 'w-[2rem]' : widOpts.half
 
   const handleMainMenuClose = () => {
     setSidebar(true)
@@ -52,13 +53,13 @@ const ContentSidebar = ({ appId }) => {
       data-sidebar="content-menu"
       className={`inline-flex h-[calc(100vh-4.5rem)] flex-col opacity-[.98] bg-gradient-to-b from-sky-100 via-sky-100 to-blue-200 border-l border-gray-200 transition-all duration-300 ${menuWidthString}`}
     >
-      <div className="flex items-center justify-start px-2 border-b border-gray-200">
+      <div className="flex items-center justify-start px-0 border-b border-gray-200">
         <button
           onClick={(e) => {
             e.stopPropagation()
             toggleSidebar()
           }}
-          className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
+          className="px-1 p-2 rounded-lg hover:bg-gray-100 transition-colors"
           aria-label={isOpen ? 'Expand content' : 'Collapse content'}
           data-trigger="content-menu"
         >
@@ -68,6 +69,7 @@ const ContentSidebar = ({ appId }) => {
             <ChevronRight className="w-5 h-5 text-gray-500" />
           )}
         </button>
+
         {/* {!isOpen && (
           <p className="font-thin italic h-8 ml-2 flex items-center justify-start overflow-clip font-mono">
             Content Panel

@@ -1,11 +1,12 @@
-import { Link, routes, navigate } from '@redwoodjs/router'
+import { routes, navigate } from '@redwoodjs/router'
 import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
 
-import OrganizationMembers from 'src/components/OrganizationMembers/OrganizationMembers'
-import OrganizationSettings from 'src/components/OrganizationWidgets/OrganizationSettings/OrganizationSettings'
+// import OrganizationMembers from 'src/components/OrganizationMembers/OrganizationMembers'
+// import OrganizationSettings from 'src/components/OrganizationWidgets/OrganizationSettings/OrganizationSettings'
 import OrgTile from 'src/components/shippyUi/OrgTile/OrgTile'
 
+import OrganizationOfAUserLandingAfterLogin from '../OrganizationOfAUserLandingAfterLogin/OrganizationOfAUserLandingAfterLogin'
 import ShippyCloudBanner from '../shippyUi/ShippyCloudBanner/ShippyCloudBanner'
 
 const DELETE_ORGANIZATION_MUTATION = gql`
@@ -16,7 +17,7 @@ const DELETE_ORGANIZATION_MUTATION = gql`
   }
 `
 
-const OrganizationOfUser = ({ organization, returnToWhere }) => {
+const OrganizationOfUser = ({ organization, returnToWhere, user }) => {
   const [deleteOrganization] = useMutation(DELETE_ORGANIZATION_MUTATION, {
     onCompleted: () => {
       toast.success('Organization deleted')
@@ -27,31 +28,47 @@ const OrganizationOfUser = ({ organization, returnToWhere }) => {
     },
   })
 
-  const onDeleteClick = (id) => {
-    if (confirm('Are you sure you want to delete organization ' + id + '?')) {
-      deleteOrganization({ variables: { id } }).then(() => {
-        toast.success('Organization deleted')
-        setTimeout(() => {
-          navigate(routes.home())
-        }, 1300)
-      })
-    }
+  // const onDeleteClick = (id) => {
+  //   if (confirm('Are you sure you want to delete organization ' + id + '?')) {
+  //     deleteOrganization({ variables: { id } }).then(() => {
+  //       toast.success('Organization deleted')
+  //       setTimeout(() => {
+  //         navigate(routes.home())
+  //       }, 1300)
+  //     })
+  //   }
+  // }
+
+  let n = user?.name
+
+  if (!n) {
+    n = user?.email
   }
+
+  if (!n) {
+    n = 'User'
+  }
+
+  console.log({ window })
+  window.orgName = organization?.name
 
   return (
     <>
       <div className="rw-segment w-full">
-        <OrgTile key={'orgTile1'}>
+        {/* <OrgTile key={'orgTile1'}>
           <ShippyCloudBanner>Members</ShippyCloudBanner>
-          <OrganizationMembers members={organization.members} />
-        </OrgTile>
+          {organization?.members ? (
+            <OrganizationMembers members={organization.members} />
+          ) : (
+            "No members yet? How did that happen?? Don't float away"
+          )}
+        </OrgTile> */}
         <OrgTile key={'orgTile2'}>
           <div className="w-full items-center justify-center">
-            <ShippyCloudBanner>Settings</ShippyCloudBanner>
+            <ShippyCloudBanner>Welcome: {n} </ShippyCloudBanner>
             <div className="w-full">
-              <OrganizationSettings
-                id={organization.id}
-                organizationSettings={organization.organizationSettings}
+              <OrganizationOfAUserLandingAfterLogin
+                organization={organization}
               />
             </div>
           </div>

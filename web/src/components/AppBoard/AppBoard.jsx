@@ -11,7 +11,7 @@ const AppBoard = ({ appId, currentUser }) => {
       <div className="w-full">
         <OrganizationOfAUserCell
           id={appId}
-          userId={currentUser?.id}
+          user={currentUser}
           returnToWhere={routes.home()}
         />
       </div>

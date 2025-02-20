@@ -7,8 +7,6 @@ import OrgTile from 'src/components/shippyUi/OrgTile/OrgTile'
 import ShippyCloudBanner from 'src/components/shippyUi/ShippyCloudBanner/ShippyCloudBanner'
 
 const OrganizationMembersPage = ({ appId }) => {
-  const { currentUser } = useAuth()
-
   const addANewMember = (appId) => {
     console.log('addANewMember: ', appId)
   }
