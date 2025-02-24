@@ -2,12 +2,16 @@ import { context } from '@redwoodjs/graphql-server'
 
 import { db } from 'src/lib/db'
 
+const TAKE_LIMIT = 50
+
 export const webhookEventLogs = () => {
   return db.webhookEventLog.findMany()
 }
 
-export const webhookEventLogsOfAnOrg = ({ organizationId }) => {
+export const webhookEventLogsOfAnOrg = ({ organizationId, skipAmount }) => {
   return db.webhookEventLog.findMany({
+    take: TAKE_LIMIT,
+    skip: skipAmount !== undefined && skipAmount !== null ? skipAmount : 0,
     orderBy: { createdAt: 'desc' },
     where: { organizationId },
   })

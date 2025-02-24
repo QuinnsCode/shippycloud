@@ -1,4 +1,7 @@
+import { useState } from 'react'
+
 import PostHogTestButton from 'src/components/PostHogTestButton/PostHogTestButton'
+import ShippyCloudSearchBar from 'src/components/shippyUi/ShippyCloudSearchBar/ShippyCloudSearchBar'
 import { ShipstationQueries } from 'src/gql/shipstation'
 
 import ShipstationOrderCard from '../ShipstationOrderCard/ShipstationOrderCard'
@@ -38,10 +41,18 @@ export const Success = ({ shipders }) => {
 }
 
 const ShipstationShipments = ({ shipments }) => {
+  const [isSearching, setIsSearching] = useState(false)
+  const [searchResults, setSearchResults] = useState([])
   return (
-    <div className="mx-24">
-      <h2>Shipments - Fetcher cell</h2>
-      {shipments?.map((shipment) => (
+    <div className="w-full">
+      <ShippyCloudSearchBar
+        masterData={shipments}
+        setSearchResults={setSearchResults}
+        isSearching={isSearching}
+        setIsSearching={setIsSearching}
+        searchType={'shipstationShipments'}
+      />
+      {searchResults?.map((shipment) => (
         <ShipstationShipmentCard key={shipment.id} shipment={shipment} />
       ))}
     </div>
@@ -49,9 +60,19 @@ const ShipstationShipments = ({ shipments }) => {
 }
 
 const ShipstationOrders = ({ orders }) => {
+  const [isSearching, setIsSearching] = useState(false)
+  const [searchResults, setSearchResults] = useState([])
+
   return (
     <div className="w-full">
-      {orders?.map((order) => (
+      <ShippyCloudSearchBar
+        masterData={orders}
+        setSearchResults={setSearchResults}
+        isSearching={isSearching}
+        setIsSearching={setIsSearching}
+        searchType={'shipstationOrders'}
+      />
+      {searchResults?.map((order) => (
         <>
           {order?.orderId !== null && order?.orderId !== undefined && (
             <ShipstationOrderCard key={order.orderId} order={order} />

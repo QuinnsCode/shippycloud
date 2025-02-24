@@ -9,6 +9,10 @@ import {
   ChevronLeft,
   ChevronRight,
   ScrollText,
+  ShoppingCart,
+  Tag,
+  Store,
+  Pencil,
 } from 'lucide-react'
 
 import { routes } from '@redwoodjs/router'
@@ -20,10 +24,15 @@ import { useEscapeKey } from 'src/hooks/useEscapeKey'
 const MenuSidebar = ({ userId, appId, memberId }) => {
   //CONSTS
 
-  const menuItems = [
+  const topMenuItems = [
     {
       icon: Package2,
       label: 'Orders',
+      path: routes.ordersOfAnOrg({ appId: appId, userId: userId }),
+    },
+    {
+      icon: Package2,
+      label: 'Shipments',
       path: routes.ordersOfAnOrg({ appId: appId, userId: userId }),
     },
     {
@@ -37,10 +46,25 @@ const MenuSidebar = ({ userId, appId, memberId }) => {
       path: routes.organizationMembers({ appId }),
     },
     { icon: Building2, label: 'Orgs', path: routes.homeWithAppId({ appId }) },
+    {
+      icon: Tag,
+      label: 'Tags',
+      path: routes.tags({ appId: appId, userId: userId }),
+    },
+    {
+      icon: ShoppingCart,
+      label: 'Products',
+      path: routes.products({ appId: appId, userId: userId }),
+    },
+    {
+      icon: Store,
+      label: 'Stores',
+      path: routes.stores({ appId: appId, userId: userId }),
+    },
   ]
 
   const bottomMenuItems = [
-    { icon: ScrollText, label: 'Blog', path: routes.blog() },
+    { icon: Pencil, label: 'Blog', path: routes.blog() },
     { icon: ScrollText, label: 'Docs', path: routes.docs() },
     {
       icon: Settings,
@@ -69,11 +93,13 @@ const MenuSidebar = ({ userId, appId, memberId }) => {
 
   //EFFECTS
 
+  const viewHeight =
+    'h-[calc(100vh-2rem)] sm:h-[calc(100vh-2rem)] md:h-[calc(100vh-4rem)] lg:h-[calc(100vh-4rem)] xl:h-[calc(100vh-4rem)] 2xl:h-[calc(100vh-4rem)]'
   return (
     <div
       ref={mainMenuSidebarRef}
       data-sidebar="main-menu"
-      className={`inline-flex h-[calc(100vh-4.5rem)] flex-col opacity-90 bg-gradient-to-b from-sky-100 via-sky-100 to-blue-200 border-r border-gray-200 transition-all duration-300 ${
+      className={`inline-flex ${viewHeight} flex-col opacity-90 bg-gradient-to-b from-sky-100 via-sky-100 to-blue-200 border-r border-gray-200 transition-all duration-300 ${
         menuWidthString
       }`}
     >
@@ -104,14 +130,14 @@ const MenuSidebar = ({ userId, appId, memberId }) => {
         <ul className="flex flex-col h-full py-0">
           <div>
             <ShippyMenuSidebarIconList
-              key="top"
-              items={menuItems}
+              key="topLeftSidebarItems"
+              items={topMenuItems}
               isOpen={isOpen}
             />
           </div>
           <div className="mt-auto">
             <ShippyMenuSidebarIconList
-              key="bottom"
+              key="bottomLeftSidebarItems"
               items={bottomMenuItems}
               isOpen={isOpen}
             />

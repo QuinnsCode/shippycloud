@@ -39,6 +39,7 @@ const ContentSidebar = ({ appId }) => {
   }
 
   const menuWidthString = isOpen ? 'w-[2rem]' : widOpts.half
+  const menuHeightString = 'h-[calc(100vh-4rem)]'
 
   const handleMainMenuClose = () => {
     setSidebar(true)
@@ -51,7 +52,7 @@ const ContentSidebar = ({ appId }) => {
     <div
       ref={mainMenuSidebarRef}
       data-sidebar="content-menu"
-      className={`inline-flex h-[calc(100vh-4.5rem)] flex-col opacity-[.98] bg-gradient-to-b from-sky-100 via-sky-100 to-blue-200 border-l border-gray-200 transition-all duration-300 ${menuWidthString}`}
+      className={`inline-flex max-w-[calc(100vw)] ${menuHeightString} flex-col opacity-[.98] bg-gradient-to-b from-sky-100 via-sky-100 to-blue-200 border-l border-gray-200 transition-all duration-300 ${menuWidthString}`}
     >
       <div className="flex items-center justify-start px-0 border-b border-gray-200">
         <button
@@ -59,7 +60,7 @@ const ContentSidebar = ({ appId }) => {
             e.stopPropagation()
             toggleSidebar()
           }}
-          className="px-1 p-2 rounded-lg hover:bg-gray-100 transition-colors"
+          className="py-2 rounded-lg hover:bg-gray-100 transition-colors"
           aria-label={isOpen ? 'Expand content' : 'Collapse content'}
           data-trigger="content-menu"
         >
@@ -78,12 +79,10 @@ const ContentSidebar = ({ appId }) => {
       </div>
 
       <div className={`flex-1 overflow-y-auto ${isOpen ? 'hidden' : 'block'}`}>
-        <div className="px-4">
-          <SidebarContentHandler
-            sidebarContent={sidebarContent}
-            sidebarType={sidebarType}
-          />
-        </div>
+        <SidebarContentHandler
+          sidebarContent={sidebarContent}
+          sidebarType={sidebarType}
+        />
       </div>
     </div>
   )

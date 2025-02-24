@@ -3,16 +3,17 @@ import SignUp from 'src/components/AuthButtons/SignUp/SignUp'
 
 const SignUpLogIn = () => {
   return (
-    <div className="w-5/6 mx-auto grid grid-rows-3 gap-4">
-      <p>
-        You are not logged in, you need to create an account or log in to
-        continue!
+    <div className="w-full mx-auto grid grid-rows-3 items-center justify-center text-center">
+      <p className="justify-self-center font-mono tracking-tight">
+        You are not logged in!
+        <br /> Create an account or Login to continue!
       </p>
-      <div>
-        <SignUp />
-      </div>
-      <div>
+      <div className="inline my-8">
         <LogIn />
+      </div>
+      Or
+      <div className="mt-8">
+        <SignUp />
       </div>
     </div>
   )

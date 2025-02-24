@@ -3,6 +3,7 @@ import React, { useRef, useState, useEffect } from 'react'
 import { useSubscription, useMutation, gql } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
 
+import ShippyCloudSearchBar from 'src/components/shippyUi/ShippyCloudSearchBar/ShippyCloudSearchBar'
 import ShippyWebhookEventCard from 'src/components/shippyUi/ShippyWebhookEventCard/ShippyWebhookEventCard'
 import VirtualScrolling from 'src/components/VirtualScrolling/VirtualScrolling'
 
@@ -41,6 +42,8 @@ const WebhookEventLogsOfAnOrgStream = ({ initialLogs, organizationId }) => {
   const [listGoesTopToBottom] = useState(true)
   const [addNewToTop] = useState(true)
 
+  const [isSearching, setIsSearching] = useState(false)
+  const [searchResults, setSearchResults] = useState([])
   //HOOKS
   const [createWebhookEventLog] = useMutation(CREATE_WEBHOOK_EVENT_LOG, {
     onCompleted: (data) => {
@@ -157,14 +160,21 @@ const WebhookEventLogsOfAnOrgStream = ({ initialLogs, organizationId }) => {
     <div
       className={`flex flex-col h-full ${!isNewEventReceived ? 'bg-gray-900' : 'bg-gray-800'} transition-colors text-white duration-500`}
     >
-      <TesterEventCreater handleCreateWebhookEvent={handleCreateWebhookEvent} />
+      {/* <TesterEventCreater handleCreateWebhookEvent={handleCreateWebhookEvent} /> */}
+      <ShippyCloudSearchBar
+        masterData={webhookLogs}
+        setSearchResults={setSearchResults}
+        isSearching={isSearching}
+        setIsSearching={setIsSearching}
+        searchType={'shipstationEvents'}
+      />
       <div
         id="webhook-log-container"
         className="flex-grow overflow-y-auto"
         // ref={containerRef}
       >
         <VirtualScrolling
-          items={webhookLogs}
+          items={searchResults}
           setItems={setWebhookLogs}
           itemHeight={110} // Adjust based on your ShippyWebhookEventCard height
           renderItem={renderWebhookLog}

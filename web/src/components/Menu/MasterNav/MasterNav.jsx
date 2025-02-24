@@ -115,15 +115,20 @@ const MasterNav = ({ isAuthenticated, logOut }) => {
                 <button
                   type="button"
                   onClick={logOut}
-                  className="py-2 pl-5 pr-5 hover:bg-blue-600 transition duration-100 rounded"
+                  className="py-2 pl-5 pr-5 hover:bg-blue-600 transition duration-100 rounded-sm"
                 >
                   <p className="font-mono italic">Logout</p>
                 </button>
               </div>
             ) : (
-              <Link to={routes.login()} className="py-2 px-4">
-                <p className="font-mono italic tracking-wide">Login</p>
-              </Link>
+              <div className="inline-flex">
+                <Link
+                  to={routes.login()}
+                  className="py-2 pl-5 pr-5 hover:bg-blue-600 transition duration-100 rounded-sm"
+                >
+                  <p className="font-mono italic tracking-wide">Login</p>
+                </Link>
+              </div>
             )}
           </li>
         </ul>

@@ -114,7 +114,9 @@ const Contents = ({ onSubmit, usernameRef }) => {
               <FieldError name="password" className="rw-field-error" />
 
               <div className="rw-button-group">
-                <Submit className="rw-button rw-button-blue">Sign Up</Submit>
+                <Submit className="rw-button bg-gradient-to-br from-slate-500 via-slate-600 to-slate-500 hover:bg-gradient-to-br hover:from-slate-700 hover:via-slate-800 hover:to-slate-800 text-white font-bold rounded-2xl focus:outline-none focus:shadow-outline w-full max-w-xl">
+                  Sign Up
+                </Submit>
               </div>
             </Form>
           </div>

@@ -24,26 +24,33 @@ const shippyCloudBaseButtonTainwildString =
 
 const OrganizationList = ({ organizations, userId }) => {
   return (
-    <div>
-      <ShippyCloudBanner>
-        <p>Your Organizations:</p>
-      </ShippyCloudBanner>
-      <hr />
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 shadow-xl shadow-slate-600">
-        {organizations &&
-          organizations.map((organization, index) => {
-            return (
-              <OrganizationCard
-                key={organization.id}
-                organization={organization}
-                index={index}
-              />
-            )
-          })}
-        <AddANewOrganizationCard
-          userId={userId}
-          index={organizations?.length || 0}
-        />
+    <div className="">
+      <div className="w-full flex justify-center">
+        <ShippyCloudBanner>
+          <p className="font-mono tracking tight font-light px-24">
+            Your Organizations:
+          </p>
+        </ShippyCloudBanner>
+      </div>
+      <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-1 xl:grid-cols-1 2xl:grid-cols-1 gap-4 shadow-xl shadow-slate-600 items-center justify-center w-full">
+        <div className="w-full inline-flex justify-center">
+          {organizations &&
+            organizations.map((organization, index) => {
+              return (
+                <OrganizationCard
+                  key={organization.id}
+                  organization={organization}
+                  index={index}
+                />
+              )
+            })}
+        </div>
+        <div className="w-full inline-flex justify-center">
+          <AddANewOrganizationCard
+            userId={userId}
+            index={organizations?.length || 0}
+          />
+        </div>
       </div>
       {/* <div>
         <AddOrganizations userId={userId} />
@@ -89,7 +96,7 @@ const SignUpOrganizationCard = React.memo(({ userId, index }) => {
   }, [])
 
   return (
-    <Link
+    <button
       ref={cardRef}
       className="bg-gradient-to-br from-sky-500 via-sky-600 to-sky-500 rounded-lg overflow-hidden p-4 w-full max-w-sm h-80 relative shadow-xl shadow-slate-600 m-4 rw-button inline"
       onMouseMove={handleMouseMove}
@@ -112,15 +119,10 @@ const SignUpOrganizationCard = React.memo(({ userId, index }) => {
           <OrgAvatar icon={organizationIconName} />
         </div>
       </div>
-      <button
-        onClick={() => {
-          /* Add logic to create new organization */
-        }}
-        className="bg-blue-300 rw-button hover:bg-blue-200 text-white hover:text-sky-700 py-2 px-6 rounded-full text-center block mt-4 w-full"
-      >
+      <Link className="bg-blue-300 rw-button hover:bg-blue-200 text-white hover:text-sky-700 py-2 px-6 rounded-full text-center block mt-4 w-full">
         Add Organization
-      </button>
-    </Link>
+      </Link>
+    </button>
   )
 })
 
@@ -167,7 +169,7 @@ const OrganizationCard = React.memo(({ organization, index }) => {
     <Link
       ref={cardRef}
       to={routes.homeWithAppId({ appId: organization.id })}
-      className="bg-gradient-to-br from-sky-500 via-sky-600 to-sky-500 rounded-lg overflow-hidden p-4 w-full max-w-sm h-80 relative shadow-xl shadow-slate-600 m-4 rw-button inline "
+      className="bg-gradient-to-br from-sky-500 via-sky-600 to-sky-500 rounded-2xl overflow-hidden p-4 w-full max-w-sm h-80 relative shadow-xl shadow-slate-600 m-4 rw-button inline "
       onMouseMove={handleMouseMove}
     >
       <div
@@ -188,7 +190,7 @@ const OrganizationCard = React.memo(({ organization, index }) => {
           <OrgAvatar icon={organizationIconName} />
         </div>
       </div>
-      <button className="bg-blue-300 rw-button hover:bg-blue-200 text-white hover:text-sky-700 py-2 px-6 rounded-full text-center block mt-4">
+      <button className="rw-button bg-blue-300 hover:bg-blue-200 text-white hover:text-sky-700 py-2 px-6 rounded-full text-center inline-flex w-full mt-4">
         Go to: {organization.name}
       </button>
     </Link>

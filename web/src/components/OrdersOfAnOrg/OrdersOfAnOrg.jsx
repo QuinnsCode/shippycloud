@@ -11,10 +11,12 @@ const OrdersOfAnOrg = ({ appId }) => {
   const resourceUrl = url3
 
   const marginOpts =
-    'ml-2 mr-2 xs:ml-2 xs:mr-2 sm:ml-2 sm:mr-2 md:ml-24 md:mr-12 lg:ml-2 lg:mr-2 xl:ml-4 xl:mr-4 2xl:ml-24 2xl:mr-16'
+    'ml-2 mr-2 xs:ml-2 xs:mr-2 sm:ml-2 sm:mr-2 md:ml-2 md:mr-12 lg:ml-2 lg:mr-2 xl:ml-4 xl:mr-4 2xl:ml-24 2xl:mr-16'
 
   return (
-    <div className={`max-h-[calc(100vh-5rem)] overflow-y-scroll ${marginOpts}`}>
+    <div
+      className={`max-h-[calc(100vh-2rem)] overflow-y-scroll ${marginOpts} border-b-[16px] border-blue-900`}
+    >
       <ShipstationFetcherCell
         organizationId={appId}
         shipstationUrl={resourceUrl}

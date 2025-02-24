@@ -21,7 +21,7 @@ const LoginPage = () => {
   const { isAuthenticated, logIn } = useAuth()
 
   const normalButtonString =
-    'rw-button bg-gradient-to-br from-blue-500 via-sky-600  to-blue-700 hover:bg-gradient-to-br hover:from-blue-500 hover:via-sky-700 hover:to-blue-600 text-white font-bold rounded-lg focus:outline-none focus:shadow-outline w-full'
+    'rw-button bg-gradient-to-br from-blue-500 via-sky-600 to-blue-700 hover:bg-gradient-to-br hover:from-blue-500 hover:via-sky-700 hover:to-blue-600 text-white font-bold rounded-xl focus:outline-none focus:shadow-outline w-full'
 
   useEffect(() => {
     if (isAuthenticated) {

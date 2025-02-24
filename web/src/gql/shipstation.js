@@ -1,3 +1,4 @@
+import { gql } from '@redwoodjs/web'
 // web/src/graphql/shipstation.ts
 const BASE_QUERY = gql`
   query GetShipstation($shipstationUrl: String!, $organizationId: String!) {
@@ -66,4 +67,20 @@ export const ShipstationQueries = {
       organizationId,
     }),
   }),
+
+  GET_TAGS: {
+    query: BASE_QUERY,
+    variables: ({ organizationId }) => ({
+      shipstationUrl: `https://ssapi.shipstation.com/accounts/listtags`,
+      organizationId,
+    }),
+  },
+
+  GET_PRODUCTS: {
+    query: BASE_QUERY,
+    variables: ({ organizationId }) => ({
+      shipstationUrl: `https://ssapi.shipstation.com/products`,
+      organizationId,
+    }),
+  },
 }

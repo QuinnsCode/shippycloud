@@ -45,7 +45,7 @@ const ShippyAppSidebar = () => {
     <Sidebar
       side="right"
       // defaultOpen={false}
-      className="bg-red-500 h-[calc(100vh-4.5rem)]"
+      className="h-[calc(100vh-4.5rem)]"
     >
       <SidebarContent>
         <SidebarGroup>

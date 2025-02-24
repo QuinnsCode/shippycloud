@@ -10,8 +10,6 @@ const OrganizationMemberList = ({ members, appId }) => {
     console.log('addANewMember')
   }
 
-  console.log(hasRole('ADMIN'), { currentUser })
-
   return (
     <div className="space-y-4">
       {members.map((member, index) => (
