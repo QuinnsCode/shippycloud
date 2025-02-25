@@ -6,6 +6,7 @@ import {
   Users,
   Building2,
   Settings,
+  Pencil,
   ChevronLeft,
   ChevronRight,
   ScrollText,
@@ -21,7 +22,7 @@ const MenuSidebarForNoOrgId = ({ userId, appId, memberId }) => {
   //CONSTS
   const menuItems = [
     { icon: House, label: 'Home', path: routes.home() },
-    { icon: ScrollText, label: 'Blog', path: routes.blog() },
+    { icon: Pencil, label: 'Blog', path: routes.blog() },
     { icon: ScrollText, label: 'Docs', path: routes.docs() },
   ]
 

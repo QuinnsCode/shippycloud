@@ -42,6 +42,11 @@ export const schema = gql`
     domain: String
     organizationSettings: String
   }
+  input UpdateOrganizationSettingsInput {
+    userId: String!
+    key: String!
+    value: Boolean!
+  }
 
   type Mutation {
     createOrganizationAndCreateOrganizationMember(
@@ -54,5 +59,9 @@ export const schema = gql`
       input: UpdateOrganizationInput!
     ): Organization! @requireAuth
     deleteOrganization(id: String!): Organization! @requireAuth
+    updateOrganizationSettings(
+      organizationId: String!
+      input: UpdateOrganizationSettingsInput!
+    ): Organization! @requireAuth
   }
 `

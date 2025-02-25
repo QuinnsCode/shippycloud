@@ -32,7 +32,7 @@ const ContactPage = () => {
 
   const onSubmit = (data) => {
     create({ variables: { input: data } })
-    console.log(data)
+    // console.log(data)
   }
 
   return (

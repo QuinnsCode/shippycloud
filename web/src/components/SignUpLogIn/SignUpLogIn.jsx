@@ -12,7 +12,7 @@ const SignUpLogIn = () => {
         <LogIn />
       </div>
       Or
-      <div className="mt-8">
+      <div className="mt-8 mb-24">
         <SignUp />
       </div>
     </div>

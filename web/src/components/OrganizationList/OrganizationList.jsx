@@ -15,14 +15,36 @@ import {
   Feather,
 } from 'lucide-react'
 
-import { Link, routes } from '@redwoodjs/router'
+const USER_ADDS_AN_ORGANIZATION_AND_BECOMES_MEMBER_MUTATION = gql`
+  mutation UserAddsAnOrganizationMutation(
+    $userId: String!
+    $name: String!
+    $domain: String
+  ) {
+    createOrganizationAndCreateOrganizationMember(
+      input: { userId: $userId, name: $name, domain: $domain }
+    ) {
+      id
+    }
+  }
+`
+
+import { Link, routes, navigate } from '@redwoodjs/router'
+import { useMutation } from '@redwoodjs/web'
+import { toast } from '@redwoodjs/web/toast'
+
+import AddingOrgForm from 'src/components/AddingOrgForm/AddingOrgForm'
 
 import ShippyCloudBanner from '../shippyUi/ShippyCloudBanner/ShippyCloudBanner'
 const tailwindString = 'w-[7rem] h-[7rem]'
 const shippyCloudBaseButtonTainwildString =
   'rw-button bg-gradient-to-r from-blue-600 via-blue-600 to-blue-500 text-white hover:bg-gradient-to-r hover:from-sky-500 hover:via-sky-600 hover:to-blue-500 hover:text-white'
 
-const OrganizationList = ({ organizations, userId }) => {
+const OrganizationList = ({
+  organizations,
+  userId,
+  setAddingAnOrganization,
+}) => {
   return (
     <div className="">
       <div className="w-full flex justify-center">
@@ -45,17 +67,15 @@ const OrganizationList = ({ organizations, userId }) => {
               )
             })}
         </div>
-        <div className="w-full inline-flex justify-center">
-          <AddANewOrganizationCard
-            userId={userId}
-            index={organizations?.length || 0}
-          />
-        </div>
+        {organizations?.length === 0 ? (
+          <div className="w-full inline-flex justify-center">
+            <AddANewOrganizationCard
+              userId={userId}
+              index={organizations?.length || 0}
+            />
+          </div>
+        ) : null}
       </div>
-      {/* <div>
-        <AddOrganizations userId={userId} />
-      </div> */}
-      <hr />
     </div>
   )
 }
@@ -64,8 +84,65 @@ const AddANewOrganizationCard = ({ userId, index }) => {
   return <SignUpOrganizationCard userId={userId} index={index} />
 }
 
-const SignUpOrganizationCard = React.memo(({ userId, index }) => {
+const AddingFirstOrganization = ({ userId }) => {
+  const [addOrgAndMember, { loading, error }] = useMutation(
+    USER_ADDS_AN_ORGANIZATION_AND_BECOMES_MEMBER_MUTATION,
+    {
+      onCompleted: ({ data }) => {
+        console.log('data: ', data)
+        toast.success('Organization added!')
+        toast.success('You are now a member of this organization!')
+        // setTimeout(() => {
+        //   navigate(routes.home({ appId: data?.id }))
+        // }, 1700)
+      },
+      onError: (error) => {
+        toast.error(error.message)
+      },
+    }
+  )
+
+  const onSave = async (data) => {
+    console.log('onSave: ', data)
+
+    try {
+      const returnedNewOrgId = await addOrgAndMember({
+        variables: { userId: userId, name: data.name },
+      })
+      console.log('returnedNewOrgId: ', { returnedNewOrgId })
+      navigate(
+        routes.homeWithAppId({
+          appId:
+            returnedNewOrgId.data.createOrganizationAndCreateOrganizationMember
+              .id,
+        })
+      )
+    } catch (error) {
+      console.log('error: ', error)
+    }
+  }
+  const [addingAnOrganization, setAddingAnOrganization] = useState(false)
+
+  const addAnOrg = () => {
+    setAddingAnOrganization(true)
+    // await addOrganization({ variables: { userId } })
+    // setAddingAnOrganization(false)
+  }
+
+  return (
+    <>
+      {!addingAnOrganization ? (
+        <div className="w-full inline-flex justify-center h-full">
+          <AddingOrgForm onSave={onSave} />
+        </div>
+      ) : null}
+    </>
+  )
+}
+
+export const SignUpOrganizationCard = React.memo(({ userId, index }) => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
+  const [addingAnOrganization, setAddingAnOrganization] = useState(false)
   const cardRef = useRef(null)
   const rafRef = useRef(null)
 
@@ -96,33 +173,40 @@ const SignUpOrganizationCard = React.memo(({ userId, index }) => {
   }, [])
 
   return (
-    <button
-      ref={cardRef}
-      className="bg-gradient-to-br from-sky-500 via-sky-600 to-sky-500 rounded-lg overflow-hidden p-4 w-full max-w-sm h-80 relative shadow-xl shadow-slate-600 m-4 rw-button inline"
-      onMouseMove={handleMouseMove}
-    >
-      <div
-        className="absolute inset-0"
-        style={{
-          background: `radial-gradient(circle at ${mousePosition.x}px ${mousePosition.y}px, rgba(255, 255, 255, 0.3), transparent 80%)`,
-          pointerEvents: 'none',
-        }}
-      />
-      <div className="relative mb-4 animate-pulse">
-        <div className="absolute -top-10 left-0 mt-2 ml-2 bg-sky-200 text-slate-800 h-8 w-8 rounded-full flex items-center justify-center">
-          {index + 1}
+    <>
+      <button
+        ref={cardRef}
+        className="bg-gradient-to-br from-sky-500 via-sky-600 to-sky-500 rounded-lg overflow-hidden p-4 w-full max-w-sm h-80 relative shadow-xl shadow-slate-600 m-4 rw-button inline"
+        onMouseMove={handleMouseMove}
+      >
+        <div
+          className="absolute inset-0"
+          style={{
+            background: `radial-gradient(circle at ${mousePosition.x}px ${mousePosition.y}px, rgba(255, 255, 255, 0.3), transparent 80%)`,
+            pointerEvents: 'none',
+          }}
+        />
+        <div className="relative mb-4 animate-pulse">
+          <div className="absolute -top-10 left-0 mt-2 ml-2 bg-sky-200 text-slate-800 h-8 w-8 rounded-full flex items-center justify-center">
+            {index + 1}
+          </div>
+          <div className="text-white font-semibold text-center mt-6 animate-pulse">
+            Add a new organization
+          </div>
+          <div className="text-slate-400 items-center inline-flex text-center mt-2 ">
+            <OrgAvatar icon={organizationIconName} />
+          </div>
         </div>
-        <div className="text-white font-semibold text-center mt-6 animate-pulse">
-          Add a new organization
-        </div>
-        <div className="text-slate-400 items-center inline-flex text-center mt-2 ">
-          <OrgAvatar icon={organizationIconName} />
-        </div>
-      </div>
-      <Link className="bg-blue-300 rw-button hover:bg-blue-200 text-white hover:text-sky-700 py-2 px-6 rounded-full text-center block mt-4 w-full">
-        Add Organization
-      </Link>
-    </button>
+        <button
+          onClick={() => setAddingAnOrganization(true)}
+          className="bg-blue-300 rw-button hover:bg-blue-200 text-white hover:text-sky-700 py-2 px-6 rounded-full text-center block mt-4 w-full"
+        >
+          Add Organization
+        </button>
+      </button>
+
+      <AddingFirstOrganization userId={userId} />
+    </>
   )
 })
 
@@ -133,10 +217,13 @@ const OrganizationCard = React.memo(({ organization, index }) => {
   const rafRef = useRef(null)
 
   const organizationSettingsJsonString = organization.organizationSettings
-  const organizationSettings = useMemo(
-    () => JSON.parse(organizationSettingsJsonString),
-    [organizationSettingsJsonString]
-  )
+  const organizationSettings = useMemo(() => {
+    if (organizationSettingsJsonString) {
+      return JSON.parse(organizationSettingsJsonString)
+    } else {
+      return {}
+    }
+  }, [organizationSettingsJsonString])
 
   const organizationIconName =
     organizationSettings.organizationIconName || 'Bug'

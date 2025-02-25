@@ -9,7 +9,7 @@ import SignUpLogIn from 'src/components/SignUpLogIn/SignUpLogIn'
 
 const HomePage = ({ appId }) => {
   const { currentUser } = useAuth()
-  console.log('currentUser: ', currentUser)
+  // console.log('currentUser: ', currentUser)
   return (
     <div className="w-full">
       <MetaTags title="Home" description="Home page" />

@@ -789,7 +789,7 @@ export const DarkModeWidget = ({ buttonValues }) => {
     safeStorage.set('theme', 'dark')
     document.documentElement.classList.add('dark')
   } else {
-    console.log('theme found - ' + safeStorage.get('theme'))
+    // console.log('theme found - ' + safeStorage.get('theme'))
   }
 
   const [theme, setTheme] = useState(safeStorage.get('theme') || 'dark')

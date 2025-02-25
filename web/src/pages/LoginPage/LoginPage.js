@@ -37,7 +37,7 @@ const LoginPage = () => {
   const onSubmit = async (data) => {
     const response = await logIn({ ...data })
 
-    console.log({ response })
+    // console.log({ response })
 
     if (response.message) {
       toast(response.message)
@@ -128,7 +128,7 @@ const LoginPage = () => {
               </div>
             </div>
           </div>
-          <div className="rw-login-link mt-2 text-center">
+          <div className="rw-login-link mt-16 text-center">
             <span>Don&apos;t have an account?</span> <SignUp />
           </div>
         </div>

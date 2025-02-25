@@ -58,6 +58,48 @@ export const updateOrganization = ({ id, input }) => {
   })
 }
 
+// Server-side function - `organization.js` service file
+export const updateOrganizationSettings = async ({ organizationId, input }) => {
+  const { userId, key, value } = input
+
+  // console.log('Updating organization settings:', { organizationId, input })
+  // Fetch the organization to ensure user authorization
+  const organization = await db.organization.findUnique({
+    where: { id: organizationId },
+    select: {
+      organizationSettings: true,
+      members: {
+        where: { userId: userId },
+        select: { userId: true, name: true },
+      },
+    },
+  })
+
+  // Authorization check using `userId` to verify if they are in `members`
+  // console.log(organization.members)
+  const isMember = organization.members.some(
+    (member) => member.userId === userId
+  )
+
+  if (!isMember) {
+    throw new Error('User not authorized to update settings')
+  }
+
+  // Update logic for organization settings
+  const currentSettings = JSON.parse(organization.organizationSettings || '{}')
+
+  const newSettings = {
+    ...currentSettings,
+    [key]: typeof value !== 'undefined' ? value : null,
+  }
+
+  // Update database with new settings
+  return db.organization.update({
+    data: { organizationSettings: JSON.stringify(newSettings) },
+    where: { id: organizationId },
+  })
+}
+
 export const deleteOrganization = async ({ id }) => {
   // Delete all organization members before deleting the organization
   await db.organizationMember.deleteMany({

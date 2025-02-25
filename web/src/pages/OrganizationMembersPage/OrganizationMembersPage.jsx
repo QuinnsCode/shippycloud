@@ -8,7 +8,7 @@ import ShippyCloudBanner from 'src/components/shippyUi/ShippyCloudBanner/ShippyC
 
 const OrganizationMembersPage = ({ appId }) => {
   const addANewMember = (appId) => {
-    console.log('addANewMember: ', appId)
+    // console.log('addANewMember: ', appId)
   }
   return (
     <>

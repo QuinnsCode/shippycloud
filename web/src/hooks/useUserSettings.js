@@ -1,41 +1,37 @@
 import { useState, useEffect } from 'react'
 
-const useUserSettings = (initialSettings, updateUserSettingsInDB) => {
-  const [currentSettings, setCurrentSettings] = useState(null)
-  const [backupSettings, setBackupSettings] = useState(null)
-
-  useEffect(() => {
+const useUserSettings = (
+  initialSettings,
+  organizationId,
+  userId,
+  dbUpdateFunction
+) => {
+  const [currentSettings, setCurrentSettings] = useState(() => {
     try {
-      let s = initialSettings
-
-      if (initialSettings === null || initialSettings === undefined) {
-        s = {}
-      }
-
-      if (typeof initialSettings === 'string') {
-        s = JSON.parse(initialSettings)
-      }
-
-      setCurrentSettings(s)
-      setBackupSettings(s)
+      return typeof initialSettings === 'string'
+        ? JSON.parse(initialSettings)
+        : initialSettings || {}
     } catch (error) {
       console.error('Invalid initial settings JSON:', error)
-      setCurrentSettings({})
-      setBackupSettings({})
+      return {}
     }
-  }, [initialSettings])
+  })
+
+  const [backupSettings, setBackupSettings] = useState(currentSettings)
 
   const updateSetting = async (key, value) => {
     if (!currentSettings) return false
 
     try {
       const newSettings = { ...currentSettings, [key]: value }
-      const validifiedJsonString = JSON.stringify(newSettings)
-      JSON.parse(validifiedJsonString) // Test if it's valid JSON
 
+      // console.log('newSettings', { newSettings })
       setCurrentSettings(newSettings)
 
-      const success = await updateUserSettingsInDB(validifiedJsonString)
+      const success = await dbUpdateFunction({
+        organizationId,
+        input: { userId, key, value },
+      })
 
       if (success) {
         setBackupSettings(newSettings)
@@ -45,15 +41,23 @@ const useUserSettings = (initialSettings, updateUserSettingsInDB) => {
       }
     } catch (error) {
       console.error('Error updating settings:', error)
+      // console.log('newSettings-error: showing backup', { backupSettings })
       setCurrentSettings(backupSettings)
       return false
     }
   }
 
-  const getSetting = (key, defaultValue = undefined) => {
-    return currentSettings && key in currentSettings
-      ? currentSettings[key]
-      : defaultValue
+  const getSetting = (key, defaultValue) => {
+    if (defaultValue === undefined) {
+      // console.log('defaultValue is just getting setup')
+      return currentSettings?.[key] ?? false
+    } else if (defaultValue === null) {
+      // console.log('defaultValue was reset')
+      return currentSettings?.[key] ?? false
+    } else {
+      // console.log('defaultValue is not null or undefined')
+      return currentSettings?.[key] ?? defaultValue
+    }
   }
 
   return {

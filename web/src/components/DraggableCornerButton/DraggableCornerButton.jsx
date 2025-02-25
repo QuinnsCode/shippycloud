@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 
-import { X } from 'lucide-react'
+import { ChevronDownIcon, ChevronUpIcon, X } from 'lucide-react'
 
 import ShippyCloudLogo from '../shippyUi/ShippyCloudLogo/ShippyCloudLogo'
 const DraggableCornerButton2 = ({
@@ -170,9 +170,9 @@ const DraggableCornerButton2 = ({
   }
   return (
     <>
-      <button
+      <div
         ref={buttonRef}
-        className={`fixed z-30 w-24 h-16 rounded-[36px] mb-4 bg-blue-500 text-whit border-[5px] border-white shadow-lg cursor-move transition-shadow ${isDragging ? 'shadow-xl' : ''} active:shadow-sm active:scale-95 inline-flex items-center justify-center`}
+        className={`fixed z-30 w-32 h-16 rounded-[36px] mb-4 bg-blue-500 text-whit border-[5px] border-white shadow-lg cursor-move transition-shadow ${isDragging ? 'shadow-xl' : ''} active:shadow-sm active:scale-95 inline-flex items-center justify-center`}
         style={{
           transform: `translate(${position.x}px, ${position.y}px)`,
           touchAction: 'none',
@@ -180,12 +180,22 @@ const DraggableCornerButton2 = ({
         onMouseDown={handleMouseDown}
         onTouchStart={handleTouchStart}
       >
-        <button onClick={togglePanel}>
-          <ShippyCloudLogo />
+        <ShippyCloudLogo />
+
+        <button
+          onClick={togglePanel}
+          className="inline-flex items-center justify-center space-x-2 text-white"
+        >
+          {isPanelOpen ? (
+            <ChevronDownIcon className="animate-bounce text-white mr-3" />
+          ) : (
+            <ChevronUpIcon className="text-white mr-3" />
+          )}
         </button>
         {children}
-      </button>
+      </div>
 
+      {/* CLOSE THE PANEL WHEN dragging */}
       {isPanelOpen && !isDragging && (
         <div
           className={`fixed top-0 ${findPanelPosition()} opacity-[.92] h-[calc(100vh)] w-[calc(100vw-6rem)] z-20 bg-white shadow-md`}

@@ -30,10 +30,14 @@ export const Failure = ({ error }) => (
   <div className="rw-cell-error">{error?.message}</div>
 )
 
-export const Success = ({ organizationOfAUser, returnToWhere, user }) => {
+export const Success = ({
+  organizationOfAUser,
+  returnToWhere,
+  currentUser,
+}) => {
   return (
     <OrganizationOfUser
-      user={user}
+      user={currentUser}
       organization={organizationOfAUser}
       returnToWhere={returnToWhere}
     />

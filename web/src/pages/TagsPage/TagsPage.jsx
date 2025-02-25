@@ -4,7 +4,7 @@ import { Metadata } from '@redwoodjs/web'
 import ShipstationTagsCell from 'src/components/Shipstation/ShipstationTagsCell'
 
 const TagsPage = ({ appId }) => {
-  console.log('appId', appId)
+  // console.log('appId', appId)
   return (
     <>
       <Metadata title="Tags" description="Tags page" />

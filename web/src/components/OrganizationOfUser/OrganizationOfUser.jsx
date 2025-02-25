@@ -18,6 +18,7 @@ const DELETE_ORGANIZATION_MUTATION = gql`
 `
 
 const OrganizationOfUser = ({ organization, returnToWhere, user }) => {
+  console.log('OrganizationOfUser', { user })
   const [deleteOrganization] = useMutation(DELETE_ORGANIZATION_MUTATION, {
     onCompleted: () => {
       toast.success('Organization deleted')
@@ -39,18 +40,21 @@ const OrganizationOfUser = ({ organization, returnToWhere, user }) => {
   //   }
   // }
 
-  let n = user?.name
+  const orgSettings = JSON.parse(organization?.organizationSettings || '{}')
+  console.log('orgSettings: ', { orgSettings })
+  const hasChosenDisplayEmailOrName = orgSettings?.hasChosenDisplayEmailOrName
+  let n = !hasChosenDisplayEmailOrName ? user?.email : user?.name
 
-  if (!n) {
-    n = user?.email
-  }
+  // if (!n) {
+  //   n = user?.email
+  // }
 
   if (!n) {
     n = 'User'
   }
 
-  console.log({ window })
-  window.orgName = organization?.name
+  //store user organanization name in window for use in the landing page
+  window.orgName = n
 
   return (
     <>
@@ -69,6 +73,7 @@ const OrganizationOfUser = ({ organization, returnToWhere, user }) => {
             <div className="w-full">
               <OrganizationOfAUserLandingAfterLogin
                 organization={organization}
+                user={user}
               />
             </div>
           </div>
