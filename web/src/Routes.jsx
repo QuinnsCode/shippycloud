@@ -58,6 +58,7 @@ const Routes = () => {
           <Route path="/endpoints" page={EndpointEndpointsPage} name="endpoints" />
         </Set>
 
+        <Route path="/todo" page={TodoPage} name="todo" />
         <Route path="/stores/{appId:String,userId:String}" page={StoresPage} name="stores" />
         <Route path="/products/{appId:String,userId:String}" page={ProductsPage} name="products" />
         <Route path="/tags/{appId:String,userId:String}" page={TagsPage} name="tags" />

@@ -77,18 +77,30 @@ const NewUserFlow = ({
   }
 
   const updateUserToHaveAName = async (userId, name) => {
-    console.log('updateUserToHaveAName', { id: userId, input: { name: name } })
+    // console.log('updateUserToHaveAName')
+    // console.log({ id: userId, input: { name } })
+
     try {
+      if (!name) {
+        throw new Error('Name is required')
+      }
+      if (!userId) {
+        throw new Error('User ID is required')
+      }
+
       const { data } = await updateUser({
         variables: {
           id: userId,
-          input: { name: name },
+          input: { name },
         },
       })
 
-      toast.success('User name updated successfully.')
-
-      return !!data.updateUserToHaveAName
+      if (data?.updateUser) {
+        toast.success('User name updated successfully.')
+        return true
+      } else {
+        throw new Error('Failed to receive updated user data from server.')
+      }
     } catch (error) {
       console.error('Error updating user name:', error)
       toast.error('Failed to update user name.')

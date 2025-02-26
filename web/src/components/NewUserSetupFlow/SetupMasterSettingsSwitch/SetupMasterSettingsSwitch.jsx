@@ -77,10 +77,16 @@ const SetupMasterSettingsSwitch = ({
                       //   userNameInputValue,
                       //   user?.id
                       // )
-                      updateUserToHaveAName({
-                        userId: user?.id,
-                        name: userNameInputValue,
-                      })
+
+                      updateUserToHaveAName(user?.id, userNameInputValue).then(
+                        (res) => {
+                          if (res.error) {
+                            alert(res.error)
+                          } else {
+                            alert('Name updated!')
+                          }
+                        }
+                      )
                     } else {
                       alert('Please enter a new name')
                     }

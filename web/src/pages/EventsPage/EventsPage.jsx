@@ -2,7 +2,7 @@
 import { Metadata } from '@redwoodjs/web'
 
 import { useAuth } from 'src/auth'
-import SignUpLogIn from 'src/components/SignUpLogIn/SignUpLogIn'
+import SignUpLogIn from 'src/components/AuthButtons/SignUpLogIn/SignUpLogIn'
 import WebhookEventsOfAnOrgCell from 'src/components/WebhookEventsOfAnOrgCell/WebhookEventsOfAnOrgCell'
 import WhOrgEventStreamer from 'src/components/WHOrgEventStreamer/WHOrgEventStreamer'
 

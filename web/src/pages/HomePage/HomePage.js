@@ -2,10 +2,10 @@ import { MetaTags } from '@redwoodjs/web'
 
 import { useAuth } from 'src/auth'
 // import ArticlesCell from 'src/components/ArticlesCell'
+import SignUpLogIn from 'src/components/AuthButtons/SignUpLogIn/SignUpLogIn'
 import Dashboard from 'src/components/Dashboard/Dashboard'
 // import Home from 'src/components/Home/Home'
 // import Landing from 'src/components/Landing/Landing'
-import SignUpLogIn from 'src/components/SignUpLogIn/SignUpLogIn'
 
 const HomePage = ({ appId }) => {
   const { currentUser } = useAuth()

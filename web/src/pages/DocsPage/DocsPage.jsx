@@ -47,13 +47,12 @@ const DocsPage = () => {
               </li>
               <li>Configure Webhooks in Shipstation.</li>
 
-              <li>Configure Webhooks in Shipstation.</li>
-
               <li>Add Organization MANAGERS or MEMBERS.</li>
               <li>MANAGERS have access change the view of MEMBERS.</li>
               <li>
-                MEMBERS have the ability to add and combine what is allowed by
-                ADMINs and MANAGERs.
+                MEMBERS have the ability to add and combine orders and
+                shipments. Their view is limited to what is allowed by ADMINs
+                and MANAGERs.
               </li>
               <li>Begin importing and organizing your shipping data.</li>
             </ul>
@@ -73,7 +72,7 @@ const DocsPage = () => {
                 manage resources.
               </li>
               <li>
-                <strong>USER:</strong> Can view assigned resources and process
+                <strong>MEMBER:</strong> Can view assigned resources and process
                 orders in batches.
               </li>
             </ul>

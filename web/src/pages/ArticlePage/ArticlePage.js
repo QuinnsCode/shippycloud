@@ -1,5 +1,6 @@
 import { MetaTags } from '@redwoodjs/web'
-import ArticleCell from 'src/components/ArticleCell'
+
+import ArticleCell from 'src/components/Blog/ArticleCell/ArticleCell'
 
 const ArticlePage = ({ id }) => {
   return (

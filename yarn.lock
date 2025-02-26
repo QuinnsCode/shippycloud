@@ -15703,6 +15703,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"next-themes@npm:^0.4.4":
+  version: 0.4.4
+  resolution: "next-themes@npm:0.4.4"
+  peerDependencies:
+    react: ^16.8 || ^17 || ^18 || ^19 || ^19.0.0-rc
+    react-dom: ^16.8 || ^17 || ^18 || ^19 || ^19.0.0-rc
+  checksum: 45d82f968ccfc90f6e6e3cdb95962132f6d1e19eaf614c4e824fc5d079ec522dd50cc196c58da2f000d755b81dbb0caf378c4f512a9e6b6c0a0daa3f99f1a2c7
+  languageName: node
+  linkType: hard
+
 "no-case@npm:^3.0.4":
   version: 3.0.4
   resolution: "no-case@npm:3.0.4"
@@ -18794,6 +18804,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"sonner@npm:^2.0.1":
+  version: 2.0.1
+  resolution: "sonner@npm:2.0.1"
+  peerDependencies:
+    react: ^18.0.0 || ^19.0.0 || ^19.0.0-rc
+    react-dom: ^18.0.0 || ^19.0.0 || ^19.0.0-rc
+  checksum: 29e15324109ac19e0c9f2236ad695e2791fcf183264e5a4ffc72acfff28894fb8e80de65a1bf40bcea881fe4d06481b3c533ee3dc6ffafa80a44912e2ebc5cf6
+  languageName: node
+  linkType: hard
+
 "source-map-js@npm:^1.0.2, source-map-js@npm:^1.2.1":
   version: 1.2.1
   resolution: "source-map-js@npm:1.2.1"
@@ -20663,12 +20683,14 @@ __metadata:
     clsx: ^2.1.1
     humanize-string: 2.1.0
     lucide-react: ^0.475.0
+    next-themes: ^0.4.4
     postcss: 8.4.30
     postcss-loader: 7.3.3
     posthog-js: ^1.219.3
     prop-types: 15.8.1
     react: 18.3.1
     react-dom: 18.3.1
+    sonner: ^2.0.1
     tailwind-merge: ^3.0.1
     tailwindcss: 3.3.3
     tailwindcss-animate: ^1.0.7
