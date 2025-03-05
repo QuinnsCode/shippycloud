@@ -2,6 +2,7 @@ import { useRef, useState } from 'react'
 
 import { ExternalLink } from 'lucide-react'
 
+import ShipstationBatchIntegration from 'src/components/Builder/ShipstationBatchIntegration/ShipstationBatchIntegration'
 import ShippyCloudSkyBanner from 'src/components/shippyUi/ShippyCloudSkyBanner/ShippyCloudSkyBanner'
 import { Badge } from 'src/components/ui/badge'
 import {
@@ -18,6 +19,7 @@ import {
   TableHeader,
   TableRow,
 } from 'src/components/ui/table'
+import { useBatchManager } from 'src/hooks/useBatchManager'
 import useDoubleClickCopy from 'src/hooks/useDoubleClickCopy'
 import { useSidebarState } from 'src/hooks/useSidebarState'
 
@@ -36,7 +38,10 @@ const orderCardDisplaySettings = {
 
 const ShipstationOrderCard = ({ order, orgOrderCardDisplaySettings }) => {
   const [isExpanded, setIsExpanded] = useState(false)
+
   const { updateSidebar } = useSidebarState()
+  const { batches, selectedBatchId, addItemToBatch } = useBatchManager()
+
   const formatDate = (dateString) => {
     if (!dateString) return 'N/A'
     return new Date(dateString).toLocaleDateString('en-US', {
@@ -71,7 +76,14 @@ const ShipstationOrderCard = ({ order, orgOrderCardDisplaySettings }) => {
           <CardHeader className="w-full">
             <ShippyCloudSkyBanner>{order.orderNumber}</ShippyCloudSkyBanner>
             <div className="flex justify-between items-center">
-              <div className="flex-grow px-2"></div>
+              <div className="flex-grow px-2">
+                <ShipstationBatchIntegration
+                  item={order}
+                  onAddToBatch={addItemToBatch}
+                  selectedBatchId={selectedBatchId}
+                  batches={batches}
+                />
+              </div>
               {order?.orderStatus && (
                 <Badge variant="secondary">
                   {order.orderStatus.replace(/_/g, ' ').toUpperCase()}

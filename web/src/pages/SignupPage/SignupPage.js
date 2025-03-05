@@ -1,6 +1,8 @@
 import { useRef } from 'react'
 import { useEffect } from 'react'
 
+import { toast } from 'sonner'
+
 import {
   Form,
   Label,
@@ -11,7 +13,7 @@ import {
 } from '@redwoodjs/forms'
 import { Link, navigate, routes } from '@redwoodjs/router'
 import { MetaTags } from '@redwoodjs/web'
-import { toast, Toaster } from '@redwoodjs/web/toast'
+// import { toast, Toaster } from '@redwoodjs/web/toast'
 
 import { useAuth } from 'src/auth'
 
@@ -51,7 +53,7 @@ const SignupPage = () => {
       <MetaTags title="Signup" />
 
       <main className="rw-main w-96 mx-auto mt-12">
-        <Toaster toastOptions={{ className: 'rw-toast', duration: 6000 }} />
+        {/* <Toaster toastOptions={{ className: 'rw-toast', duration: 6000 }} /> */}
         <Contents onSubmit={onSubmit} usernameRef={usernameRef} />
       </main>
     </>

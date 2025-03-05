@@ -1,10 +1,12 @@
 import { Link, routes } from '@redwoodjs/router'
-import { Toaster } from '@redwoodjs/web/toast'
 
+// import { Toaster } from '@redwoodjs/web/toast'
+import { Toaster as SonnerToaster } from 'src/components/ui/sonner'
 const ScaffoldLayout = (props) => {
   return (
     <div className="rw-scaffold">
-      <Toaster />
+      {/* <Toaster /> */}
+      <SonnerToaster richColors />
       <header className="rw-header">
         <h1 className="rw-heading rw-heading-primary">
           {/* <Link to={routes.posts()} className="rw-link">

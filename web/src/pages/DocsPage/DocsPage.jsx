@@ -1,6 +1,7 @@
 // import { Link, routes } from '@redwoodjs/router'
 import { Metadata } from '@redwoodjs/web'
 
+import { useAuth } from 'src/auth'
 import ShippyCloudBanner from 'src/components/shippyUi/ShippyCloudBanner/ShippyCloudBanner'
 import ShippyCloudHeader from 'src/components/shippyUi/ShippyCloudHeader/ShippyCloudHeader'
 import ShippyCloudSkyBanner from 'src/components/shippyUi/ShippyCloudSkyBanner/ShippyCloudSkyBanner'
@@ -20,6 +21,7 @@ import ShippyCloudSkyBanner from 'src/components/shippyUi/ShippyCloudSkyBanner/S
       </ul> */
 }
 const DocsPage = () => {
+  const { isAuthenticated } = useAuth()
   return (
     <>
       <Metadata
@@ -37,6 +39,12 @@ const DocsPage = () => {
               <li>
                 Sign up for a ShippyCloud account (this makes you a{' '}
                 <strong>USER</strong>).
+                {isAuthenticated ? (
+                  <>
+                    <br />
+                    <i>You are already signed up!</i>
+                  </>
+                ) : null}
               </li>
               <li>
                 Click &apos;Add An Organization&apos; (this makes you the{' '}

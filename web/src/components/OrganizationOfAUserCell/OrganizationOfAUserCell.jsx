@@ -15,6 +15,7 @@ export const QUERY = gql`
         userId
         role
       }
+
       organizationSettings
       createdAt
       updatedAt

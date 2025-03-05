@@ -1,5 +1,7 @@
-import { useRef } from 'react'
-import { useEffect } from 'react'
+import { useRef, useEffect } from 'react'
+
+import { format } from 'date-fns'
+import { toast } from 'sonner'
 
 import {
   Form,
@@ -11,7 +13,7 @@ import {
 } from '@redwoodjs/forms'
 import { Link, navigate, routes } from '@redwoodjs/router'
 import { MetaTags } from '@redwoodjs/web'
-import { toast, Toaster } from '@redwoodjs/web/toast'
+// import { toast, Toaster } from '@redwoodjs/web/toast'
 
 import { useAuth } from 'src/auth'
 import SignUp from 'src/components/AuthButtons/SignUp/SignUp'
@@ -44,7 +46,17 @@ const LoginPage = () => {
     } else if (response.error) {
       toast.error(response.error)
     } else {
-      toast.success('Welcome back!')
+      const now = new Date()
+      const formattedDate = format(now, "EEEE, MMMM dd, yyyy 'at' hh:mm a")
+
+      const descriptionStr = `Signed in: ${formattedDate} `
+      toast('Welcome back', {
+        description: descriptionStr,
+        action: {
+          // label: 'Undo',
+          // onClick: () => console.log('Undo'),
+        },
+      })
       setTimeout(() => {
         navigate(routes.home())
       }, 1700)
@@ -56,7 +68,7 @@ const LoginPage = () => {
       <MetaTags title="Login" />
 
       <main className="rw-main w-96 mx-auto mt-12">
-        <Toaster toastOptions={{ className: 'rw-toast', duration: 6000 }} />
+        {/* <Toaster toastOptions={{ className: 'rw-toast', duration: 6000 }} /> */}
         <div className="rw-scaffold rw-login-container">
           <div className="rw-segment">
             <header className="rw-segment-header">

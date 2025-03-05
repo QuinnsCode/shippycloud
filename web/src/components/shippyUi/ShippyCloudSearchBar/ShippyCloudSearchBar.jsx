@@ -14,9 +14,11 @@ const ShippyCloudSearchBar = ({
   searchType,
 }) => {
   const [searchText, setSearchText] = useState('')
+
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false)
   const debouncedSearchText = useDebounce(searchText, 140)
 
-  const shipstationTagsFilter = () => {
+  function shipstationTagsFilter() {
     const filteredResults = masterData.filter((item) =>
       item.name.toLowerCase().includes(debouncedSearchText.toLowerCase())
     )
@@ -24,7 +26,7 @@ const ShippyCloudSearchBar = ({
     setIsSearching(false)
   }
 
-  const shipstationStoresFilter = () => {
+  function shipstationStoresFilter() {
     const filteredResults = masterData.filter((store) => {
       if (!store?.storeName) return
       else {
@@ -37,7 +39,7 @@ const ShippyCloudSearchBar = ({
     setIsSearching(false)
   }
 
-  const shipstationOrdersFilter = () => {
+  function shipstationOrdersFilter() {
     const filteredResults = masterData.filter((order) => {
       if (!order?.orderNumber) return
       else {
@@ -50,7 +52,7 @@ const ShippyCloudSearchBar = ({
     setIsSearching(false)
   }
 
-  const shipstationEventsFilter = () => {
+  function shipstationEventsFilter() {
     const filteredResults = masterData.filter((event) => {
       if (!event?.resource_type) return
       else {
@@ -63,7 +65,7 @@ const ShippyCloudSearchBar = ({
     setIsSearching(false)
   }
 
-  const shipstationShipmentsFilter = () => {
+  function shipstationShipmentsFilter() {
     const filteredResults = masterData.filter((shipment) => {
       if (!shipment?.orderNumber) return
       else {
@@ -75,7 +77,20 @@ const ShippyCloudSearchBar = ({
     setSearchResults(filteredResults)
     setIsSearching(false)
   }
-  const [isSettingsOpen, setIsSettingsOpen] = useState(false)
+
+  function shipstationProductsFilter() {
+    const filteredResults = masterData.filter((product) => {
+      console.log({ product })
+      if (!product?.name) return
+      else {
+        return product.name
+          .toLowerCase()
+          .includes(debouncedSearchText.toLowerCase())
+      }
+    })
+    setSearchResults(filteredResults)
+    setIsSearching(false)
+  }
 
   useEffect(() => {
     const filterData = () => {
@@ -92,6 +107,8 @@ const ShippyCloudSearchBar = ({
           shipstationEventsFilter()
         } else if (searchType === 'shipstationShipments') {
           shipstationShipmentsFilter()
+        } else if (searchType === 'shipstationProducts') {
+          shipstationProductsFilter()
         }
       } else {
         setSearchResults(masterData)

@@ -1,5 +1,7 @@
 import { Link, routes } from '@redwoodjs/router'
-import { Toaster } from '@redwoodjs/web/toast'
+
+// import { Toaster } from '@redwoodjs/web/toast'
+import { Toaster } from 'src/components/ui/sonner'
 
 const ScaffoldLayout = ({
   title,

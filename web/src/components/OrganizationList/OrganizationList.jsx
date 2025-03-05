@@ -28,10 +28,11 @@ const USER_ADDS_AN_ORGANIZATION_AND_BECOMES_MEMBER_MUTATION = gql`
     }
   }
 `
+import { toast } from 'sonner'
 
 import { Link, routes, navigate } from '@redwoodjs/router'
 import { useMutation } from '@redwoodjs/web'
-import { toast } from '@redwoodjs/web/toast'
+// import { toast } from '@redwoodjs/web/toast'
 
 import AddingOrgForm from 'src/components/AddingOrgForm/AddingOrgForm'
 

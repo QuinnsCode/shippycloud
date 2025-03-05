@@ -9,9 +9,9 @@ const SettingsPage = ({ appId, userId }) => {
     <>
       <Metadata title="Settings" description="Settings page" />
 
-      <ShippyCloudPageHeader>
+      {/* <ShippyCloudPageHeader>
         <p>Settings page header</p>
-      </ShippyCloudPageHeader>
+      </ShippyCloudPageHeader> */}
       <ShippyCloudPageContent>
         {/* <p>page content</p> */}
         {appId ? (

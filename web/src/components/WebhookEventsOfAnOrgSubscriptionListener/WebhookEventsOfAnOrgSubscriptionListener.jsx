@@ -1,8 +1,10 @@
 // web/src/components/WebhookListener/WebhookListener.js
 import { useEffect } from 'react'
 
+import { toast } from 'sonner'
+
 import { useSubscription } from '@redwoodjs/web'
-import { toast } from '@redwoodjs/web/toast'
+// import { toast } from '@redwoodjs/web/toast'
 
 const ORGANIZATION_WEBHOOK_SUBSCRIPTION = gql`
   subscription OnWebhookReceived($organizationId: String!) {

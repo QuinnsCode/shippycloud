@@ -1,7 +1,8 @@
+import { toast } from 'sonner'
+
 import { Link, routes } from '@redwoodjs/router'
 import { useMutation } from '@redwoodjs/web'
-
-import { toast } from '@redwoodjs/web/toast'
+// import { toast } from '@redwoodjs/web/toast'
 
 import { QUERY } from 'src/components/OrderData/OrderDatasCell'
 import { timeTag, truncate } from 'src/lib/formatters'

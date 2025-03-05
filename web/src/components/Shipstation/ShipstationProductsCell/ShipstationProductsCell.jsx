@@ -1,9 +1,15 @@
+import { useState } from 'react'
+
 import { ExternalLink } from 'lucide-react'
 
 import ShippyCloudBanner from 'src/components/shippyUi/ShippyCloudBanner/ShippyCloudBanner'
+import ShippyCloudSearchBar from 'src/components/shippyUi/ShippyCloudSearchBar/ShippyCloudSearchBar'
 import { Badge } from 'src/components/ui/badge'
 import { ShipstationQueries } from 'src/gql/shipstation'
 import { useSidebarState } from 'src/hooks/useSidebarState'
+
+import ShipstationProductCard from '../ShipstationProductCard/ShipstationProductCard'
+
 export const QUERY = ShipstationQueries.GET_SHIPSTATION
 
 export const Loading = () => <div>Loading...</div>
@@ -18,11 +24,25 @@ export const Success = ({ shipders }) => {
   const shipdersData = JSON.parse(shipders?.data)
   const { products } = shipdersData
 
+  const [isSearching, setIsSearching] = useState(false)
+  const [searchResults, setSearchResults] = useState([])
   return (
     <>
       <ShippyCloudBanner>Products</ShippyCloudBanner>
-      <ul className="mx-24 my-2 py-2 h-[calc(100vh-15rem)] overflow-y-scroll rounded-xl">
-        {products && <ProductsDisplay products={products} />}
+
+      <ul className="mx-2 sm:mx-2 md:mx-4 lg:mx-4 xl:mx-2 my-2 py-2 h-[calc(100vh-15rem)] overflow-y-scroll rounded-xl">
+        {products && (
+          <>
+            <ShippyCloudSearchBar
+              masterData={products}
+              setSearchResults={setSearchResults}
+              isSearching={isSearching}
+              setIsSearching={setIsSearching}
+              searchType={'shipstationProducts'}
+            />
+            <ProductsDisplay products={searchResults} />
+          </>
+        )}
       </ul>
     </>
   )
@@ -30,15 +50,15 @@ export const Success = ({ shipders }) => {
 
 const ProductsDisplay = ({ products }) => {
   return (
-    <div className="">
+    <>
       {products?.map((product) => (
-        <ProductDisplay key={product.productId} product={product} />
+        <ShipstationProductCard key={product.productId} product={product} />
       ))}
-    </div>
+    </>
   )
 }
 
-const ProductDisplay = ({ product }) => {
+const ProductDisplay2 = ({ product }) => {
   const { updateSidebar } = useSidebarState()
   const prettyJSON = JSON.stringify(product, null, 2)
   const prettyJSONwArray = prettyJSON.replace(/}/g, '},\n')

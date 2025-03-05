@@ -1,8 +1,10 @@
+import BatchBuilder from 'src/components/Builder/BatchBuilder/BatchBuilder'
+
 const SidebarContentHandler = ({ sidebarContent, sidebarType }) => {
   if (sidebarType === 'shipstation-event') {
     return <ShipstationPayloadSidebarContent sidebarContent={sidebarContent} />
   } else {
-    return <div></div>
+    return <BatchBuilder />
   }
 }
 

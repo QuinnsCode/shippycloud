@@ -1,7 +1,10 @@
+import { format } from 'date-fns'
+import { toast } from 'sonner'
+
 import { Link, routes } from '@redwoodjs/router'
 import { useMutation } from '@redwoodjs/web'
 
-import { toast } from '@redwoodjs/web/toast'
+// import { toast } from '@redwoodjs/web/toast'
 
 import { QUERY } from 'src/components/Endpoint/EndpointsCell'
 import { timeTag, truncate } from 'src/lib/formatters'
@@ -17,10 +20,27 @@ const DELETE_ENDPOINT_MUTATION = gql`
 const EndpointsList = ({ endpoints }) => {
   const [deleteEndpoint] = useMutation(DELETE_ENDPOINT_MUTATION, {
     onCompleted: () => {
-      toast.success('Endpoint deleted')
+      const now = new Date()
+      const formattedDate = format(now, "EEEE, MMMM dd, yyyy 'at' hh:mm a")
+
+      const descriptionStr = `Endpoint deleted at: ${formattedDate} `
+      toast.success('Endpoint deleted', {
+        description: descriptionStr,
+        action: {
+          // label: 'Undo',
+          // onClick: () => console.log('Undo'),
+        },
+      })
     },
     onError: (error) => {
-      toast.error(error.message)
+      const descriptionStr = `It's gone wrong. Error: ${error?.message} `
+      toast.error('Endpoint updated', {
+        description: descriptionStr,
+        action: {
+          // label: 'Undo',
+          // onClick: () => console.log('Undo'),
+        },
+      })
     },
     // This refetches the query on the list page. Read more about other ways to
     // update the cache over here:

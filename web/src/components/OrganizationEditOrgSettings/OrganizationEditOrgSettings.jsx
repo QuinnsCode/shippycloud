@@ -1,6 +1,8 @@
+import { toast } from 'sonner'
+
 import { navigate, routes } from '@redwoodjs/router'
 import { useMutation } from '@redwoodjs/web'
-import { toast } from '@redwoodjs/web/toast'
+// import { toast } from '@redwoodjs/web/toast'
 
 import GenerateOrgApiKeyForm from 'src/components/OrganizationWidgets/GenerateOrgApiKeyForm/GenerateOrgApiKeyForm'
 
@@ -49,7 +51,7 @@ const OrganizationEditOrgSettings = ({ id, organizationSettings }) => {
     <div className="rw-segment">
       <header className="rw-segment-header">
         <div className="rw-heading font-thin rw-heading-secondary">
-          <ShippyCloudBanner>ADD API KEYs: {id}</ShippyCloudBanner>
+          <ShippyCloudBanner>ADD API KEYs: {name}</ShippyCloudBanner>
         </div>
       </header>
 
@@ -61,6 +63,7 @@ const OrganizationEditOrgSettings = ({ id, organizationSettings }) => {
           error={error}
           loading={loading}
         /> */}
+        <h1>Edit Organization API Key</h1>
         <GenerateOrgApiKeyForm organizationId={id} />
       </div>
     </div>

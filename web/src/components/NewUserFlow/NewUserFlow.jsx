@@ -1,5 +1,7 @@
+import { toast } from 'sonner'
+
 import { useMutation } from '@redwoodjs/web'
-import { toast } from '@redwoodjs/web/toast'
+// import { toast } from '@redwoodjs/web/toast'
 
 import SetupSettingsList from 'src/components/NewUserSetupFlow/SetupSettingsList/SetupSettingsList'
 import { Card, CardContent } from 'src/components/ui/card'
@@ -13,42 +15,76 @@ const UPDATE_USER_TO_HAVE_A_NAME = gql`
     }
   }
 `
-const setupFlags = [
+const userSetupFlags = [
   {
     key: 'hasChosenDisplayEmailOrName',
     label: 'Display Email Or Name',
     description: 'Choose display name: email-or-name',
   },
-  {
-    key: 'hasAddedPaidShipstation',
-    label: 'Paid Shipstation',
-    description: 'Shipstation subscription activated',
-  },
+  // {
+  //   key: 'hasAddedPaidShipstation',
+  //   label: 'Paid Shipstation',
+  //   description: 'Shipstation subscription activated',
+  // },
+  // {
+  //   key: 'hasAddedShipstationKey',
+  //   label: 'Shipstation API Key Added To Organization',
+  //   description: 'Shipstation API key configuration complete',
+  // },
+  // {
+  //   key: 'hasAddedManagers',
+  //   label: 'Added Managers',
+  //   description: 'Initial manager setup completed',
+  // },
+  // {
+  //   key: 'hasAddedManagersTurnedOffAlerts',
+  //   label: 'Manager Alerts Configured',
+  //   description: 'Manager notification preferences set',
+  // },
+  // {
+  //   key: 'hasAddedMembers',
+  //   label: 'Added Members',
+  //   description: 'Team members have been added',
+  // },
+  // {
+  //   key: 'hasChosenOrganizationLoginLandingPage',
+  //   label: 'Landing Page Set',
+  //   description: 'Organization login redirect configured',
+  // },
+]
+
+//only display to admmins
+const organizationSetupFlags = [
+  // {
+  //   key: 'hasAddedPaidShipstation',
+  //   label: 'Paid Shipstation',
+  //   description: 'Shipstation subscription activated',
+  // },
   {
     key: 'hasAddedShipstationKey',
     label: 'Shipstation API Key Added To Organization',
     description: 'Shipstation API key configuration complete',
   },
-  {
-    key: 'hasAddedManagers',
-    label: 'Added Managers',
-    description: 'Initial manager setup completed',
-  },
-  {
-    key: 'hasAddedManagersTurnedOffAlerts',
-    label: 'Manager Alerts Configured',
-    description: 'Manager notification preferences set',
-  },
-  {
-    key: 'hasAddedMembers',
-    label: 'Added Members',
-    description: 'Team members have been added',
-  },
-  {
-    key: 'hasChosenOrganizationLoginLandingPage',
-    label: 'Landing Page Set',
-    description: 'Organization login redirect configured',
-  },
+  // {
+  //   key: 'hasAddedManagers',
+  //   label: 'Added Managers',
+  //   description: 'Initial manager setup completed',
+  // },
+  // {
+  //   key: 'hasAddedManagersTurnedOffAlerts',
+  //   label: 'Manager Alerts Configured',
+  //   description: 'Manager notification preferences set',
+  // },
+  // {
+  //   key: 'hasAddedMembers',
+  //   label: 'Added Members',
+  //   description: 'Team members have been added',
+  // },
+  // {
+  //   key: 'hasChosenOrganizationLoginLandingPage',
+  //   label: 'Landing Page Set',
+  //   description: 'Organization login redirect configured',
+  // },
 ]
 
 const NewUserFlow = ({
@@ -112,13 +148,14 @@ const NewUserFlow = ({
     <Card className="">
       <CardContent>
         <div className="space-y-3 overflow-y-scroll h-[calc(100vh-12rem)] bg-opacity-[.6] bg-black mx-0 px-1.5 py-4 rounded-[9px]">
-          {setupFlags?.length
-            ? setupFlags?.map(({ key, label, description }, index) => (
+          {userSetupFlags?.length
+            ? userSetupFlags?.map(({ key, label, description }, index) => (
                 <div
                   key={`${key}-${index}`} // Combining the key with index to ensure uniqueness
                   className="flex items-center justify-between space-x-4"
                 >
                   <SetupSettingsList
+                    key={'UserSetup'}
                     user={user}
                     keyName={key}
                     label={label}
@@ -129,6 +166,27 @@ const NewUserFlow = ({
                   />
                 </div>
               ))
+            : 'No setup flags found, how did we manage that?!'}
+          {organizationSetupFlags?.length
+            ? organizationSetupFlags?.map(
+                ({ key, label, description }, index) => (
+                  <div
+                    key={`${key}-${index}`} // Combining the key with index to ensure uniqueness
+                    className="flex items-center justify-between space-x-4"
+                  >
+                    <SetupSettingsList
+                      key={'OrgSetup'}
+                      user={user}
+                      keyName={key}
+                      label={label}
+                      description={description}
+                      handleToggle={handleToggle}
+                      getSetting={getSetting}
+                      updateUserToHaveAName={updateUserToHaveAName}
+                    />
+                  </div>
+                )
+              )
             : 'No setup flags found, how did we manage that?!'}
         </div>
       </CardContent>

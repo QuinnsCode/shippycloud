@@ -1,5 +1,6 @@
 import React from 'react'
 
+import ShipstationBatchIntegration from 'src/components/Builder/ShipstationBatchIntegration/ShipstationBatchIntegration'
 import {
   Card,
   CardContent,
@@ -14,8 +15,11 @@ import {
   TableHeader,
   TableRow,
 } from 'src/components/ui/table'
+import { useBatchManager } from 'src/hooks/useBatchManager'
 
 const ShipstationShipmentCard = ({ shipment }) => {
+  const { batches, selectedBatchId, addItemToBatch } = useBatchManager()
+
   // Helper function to format dates
   const formatDate = (dateString) => {
     return new Date(dateString).toLocaleDateString('en-US', {
@@ -42,6 +46,12 @@ const ShipstationShipmentCard = ({ shipment }) => {
           <CardTitle>Basic Information</CardTitle>
         </CardHeader>
         <CardContent>
+          <ShipstationBatchIntegration
+            item={shipment}
+            onAddToBatch={addItemToBatch}
+            selectedBatchId={selectedBatchId}
+            batches={batches}
+          />
           <Table>
             <TableBody>
               <TableRow>

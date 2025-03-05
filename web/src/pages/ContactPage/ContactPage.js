@@ -1,3 +1,5 @@
+import { toast } from 'sonner'
+
 import {
   Form,
   TextField,
@@ -10,7 +12,7 @@ import {
 } from '@redwoodjs/forms'
 import { MetaTags } from '@redwoodjs/web'
 import { useMutation } from '@redwoodjs/web'
-import { toast, Toaster } from '@redwoodjs/web/toast'
+// import { toast, Toaster } from '@redwoodjs/web/toast'
 
 const CREATE_CONTACT = gql`
   mutation CreateContactMutation($input: CreateContactInput!) {

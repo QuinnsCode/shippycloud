@@ -34,12 +34,12 @@ const Routes = () => {
         <Route path="/organization-members/{id:Int}" page={OrganizationMemberOrganizationMemberPage} name="organizationMember" />
         <Route path="/organization-members" page={OrganizationMemberOrganizationMembersPage} name="organizationMembers" />
       </Set> */}
-      {/* <Set wrap={ScaffoldLayout} title="Organizations" titleTo="organizations" buttonLabel="New Organization" buttonTo="newOrganization">
+      <Set wrap={ScaffoldLayout} title="Organizations" titleTo="organizations" buttonLabel="New Organization" buttonTo="newOrganization">
         <Route path="/organizations/new" page={OrganizationNewOrganizationPage} name="newOrganization" />
         <Route path="/organizations/{id}/edit" page={OrganizationEditOrganizationPage} name="editOrganization" />
         <Route path="/organizations/{id}" page={OrganizationOrganizationPage} name="organization" />
         <Route path="/organizations" page={OrganizationOrganizationsPage} name="organizations" />
-      </Set> */}
+      </Set>
       <Private unauthenticated="home">
         <Set wrap={ScaffoldLayout}>
           <Route path="/admin/posts/new" page={PostNewPostPage} name="newPost" />
@@ -50,6 +50,21 @@ const Routes = () => {
       </Private>
 
       <Set wrap={BlogLayout}>
+        {/* Organization-related routes */}
+        {/* <Route path="/organizations/new" page={NewOrganizationPage} name="newOrganization" />
+        <Route path="/organizations/{id}" page={OrganizationPage} name="organization" />
+        <Route path="/organizations/{id}/edit" page={EditOrganizationPage} name="editOrganization" />
+        <Route path="/organizations/{id}/settings" page={OrganizationSettingsPage} name="organizationSettings" /> */}
+
+        {/* API Key routes */}
+        <Route path="/organizations/{organizationId}/api-keys/new" page={NewApiKeyPage} name="newApiKey" />
+        {/* <Route path="/organizations/{organizationId}/api-keys" page={ApiKeysPage} name="apiKeys" /> */}
+
+        {/* Onboarding flow */}
+        <Route path="/onboarding" page={OnboardingPage} name="onboardingStart" />
+        <Route path="/onboarding/{appId:String}" page={OnboardingPage} name="onboarding" />
+
+        {/* Endpoints */}
         <Set wrap={ScaffoldLayout} title="Endpoints" titleTo="endpoints" buttonLabel="New Endpoint" buttonTo="newEndpoint">
           <Route path="/endpoints/new/{userId:String,organizationId:String}" page={EndpointNewEndpointPage} name="newEndpointUserOrg" />
           <Route path="/endpoints/new" page={EndpointNewEndpointPage} name="newEndpoint" />

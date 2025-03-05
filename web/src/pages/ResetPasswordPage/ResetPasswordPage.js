@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 
+import { toast } from 'sonner'
+
 import {
   Form,
   Label,
@@ -9,7 +11,7 @@ import {
 } from '@redwoodjs/forms'
 import { navigate, routes } from '@redwoodjs/router'
 import { MetaTags } from '@redwoodjs/web'
-import { toast, Toaster } from '@redwoodjs/web/toast'
+// import { toast, Toaster } from '@redwoodjs/web/toast'
 
 import { useAuth } from 'src/auth'
 
@@ -62,7 +64,7 @@ const ResetPasswordPage = ({ resetToken }) => {
       <MetaTags title="Reset Password" />
 
       <main className="rw-main">
-        <Toaster toastOptions={{ className: 'rw-toast', duration: 6000 }} />
+        {/* <Toaster toastOptions={{ className: 'rw-toast', duration: 6000 }} /> */}
         <div className="rw-scaffold rw-login-container">
           <div className="rw-segment">
             <header className="rw-segment-header">

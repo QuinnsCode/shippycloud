@@ -17,7 +17,9 @@ const SetupSettingsList = ({
 
   const handleClick = () => {
     if (!isOpen) {
-      setIsOpen(!isOpen)
+      setIsOpen(true)
+    } else {
+      setIsOpen(false)
     }
   }
 

@@ -1,6 +1,9 @@
+import { format } from 'date-fns'
+import { toast } from 'sonner'
+
 import { navigate, routes } from '@redwoodjs/router'
 import { useMutation } from '@redwoodjs/web'
-import { toast } from '@redwoodjs/web/toast'
+// import { toast } from '@redwoodjs/web/toast'
 
 import EndpointForm from 'src/components/Endpoint/EndpointForm'
 
@@ -17,11 +20,28 @@ const NewEndpoint = ({ userId, organizationId }) => {
     CREATE_ENDPOINT_MUTATION,
     {
       onCompleted: () => {
-        toast.success('Endpoint created')
+        const now = new Date()
+        const formattedDate = format(now, "EEEE, MMMM dd, yyyy 'at' hh:mm a")
+
+        const descriptionStr = `Endpoint created at: ${formattedDate} `
+        toast.success('Endpoint created', {
+          description: descriptionStr,
+          action: {
+            // label: 'Undo',
+            // onClick: () => console.log('Undo'),
+          },
+        })
         navigate(routes.endpoints())
       },
       onError: (error) => {
-        toast.error(error.message)
+        const descriptionStr = `It's gone wrong. Error: ${error?.message} `
+        toast.error('Endpoint created error', {
+          description: descriptionStr,
+          action: {
+            // label: 'Undo',
+            // onClick: () => console.log('Undo'),
+          },
+        })
       },
     }
   )

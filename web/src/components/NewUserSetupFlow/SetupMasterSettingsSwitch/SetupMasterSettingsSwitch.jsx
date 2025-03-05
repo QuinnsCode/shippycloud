@@ -11,6 +11,7 @@ const SetupMasterSettingsSwitch = ({
   const [userNameInputValue, setUserNameInputValue] = useState('')
   if (keyName === 'hasChosenDisplayEmailOrName') {
     let showInput = false
+    //we either already have a value or we found a user because id is there but they havent set a name
     if (wasValue || (user?.id && !user?.name)) {
       // console.log('they have no name but exist')
       showInput = true
