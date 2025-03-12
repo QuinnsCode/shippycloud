@@ -12,6 +12,8 @@ import {
 } from '@redwoodjs/forms'
 import { MetaTags } from '@redwoodjs/web'
 import { useMutation } from '@redwoodjs/web'
+
+import { Toaster as SonnerToaster } from 'src/components/ui/sonner'
 // import { toast, Toaster } from '@redwoodjs/web/toast'
 
 const CREATE_CONTACT = gql`
@@ -41,7 +43,7 @@ const ContactPage = () => {
     <>
       <MetaTags title="Contact" description="Contact page" />
 
-      <Toaster />
+      <SonnerToaster />
       <div className="">
         <div className="w-full inline-flex bg-gradient-to-br from-sky-100 via-blue-300 to-blue-700 justify-center border-t-4 border-blue-300">
           <Form
