@@ -54,13 +54,19 @@ const ApiKeyForm = ({ organizationId }) => {
 
     if (inputType === 'separate') {
       // Generate the Base64 key from separate API key and secret
+      // Don't add "Basic " prefix here - just encode to Base64
       finalKey = encodeShipstationApiKey(data.apiKey, data.apiSecret)
     } else {
-      // Process the pre-formatted key
+      // Process the pre-formatted key - strip "Basic " if present
       finalKey = processApiKey(data.formattedKey)
     }
 
-    alert(finalKey)
+    // For debugging - shows what's being stored
+    console.log('Storing key:', {
+      length: finalKey.length,
+      startsWithBasic: finalKey.startsWith('Basic '),
+      prefix: finalKey.substring(0, Math.min(finalKey.length, 10)) + '...',
+    })
 
     createApiKey({
       variables: {
@@ -183,7 +189,7 @@ const ApiKeyForm = ({ organizationId }) => {
                           : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
                       } w-1/2 py-4 px-1 text-center border-b-2 font-medium text-sm`}
                     >
-                      Formatted API Key
+                      Formatted API String
                     </button>
                   </nav>
                 </div>
@@ -263,7 +269,7 @@ const ApiKeyForm = ({ organizationId }) => {
                     name="formattedKey"
                     className="block text-sm font-medium text-gray-700"
                   >
-                    Formatted API Key
+                    Formatted API String
                   </Label>
                   <TextField
                     name="formattedKey"

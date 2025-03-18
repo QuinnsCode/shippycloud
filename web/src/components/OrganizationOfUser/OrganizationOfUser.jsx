@@ -80,19 +80,12 @@ const OrganizationOfUser = ({ organization, returnToWhere, user }) => {
           <div className="w-full items-center justify-center">
             <ShippyCloudBanner>Welcome: {n} </ShippyCloudBanner>
             <div className="w-full">
-              <div className="w-full">
-                {/* WE NEED TO ADD AN API KEY! */}
-                DO WE HAVE AN API KEY?
-              </div>
-
-              <div className="w-full">
-                {/* WE NEED TO GET EVENTS! */}
+              {/* <div className="w-full">
                 DO WE HAVE EVENTS?
               </div>
               <div className="w-full">
-                {/* WE NEED TO GET EVENTS! */}
                 DO WE HAVE MEMBERS?
-              </div>
+              </div> */}
               <OrganizationOfAUserLandingAfterLogin
                 organization={organization}
                 user={user}

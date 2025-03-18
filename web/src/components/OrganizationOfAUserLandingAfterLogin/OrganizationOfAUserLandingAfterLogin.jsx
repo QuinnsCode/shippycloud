@@ -1,11 +1,11 @@
+import { toast } from 'sonner'
+
 import { useMutation } from '@redwoodjs/web'
 import { gql } from '@redwoodjs/web'
-import { toast } from '@redwoodjs/web/toast'
 
 import UserAndOrganizationSettingsCell from 'src/components/UserAndOrganizationSettingsCell/UserAndOrganizationSettingsCell'
 
 import NewUserFlow from '../NewUserFlow/NewUserFlow'
-import ShippyCloudSkyBanner from '../shippyUi/ShippyCloudSkyBanner/ShippyCloudSkyBanner'
 
 const UPDATE_ORGANIZATION_SETTINGS_FROM_SETUP = gql`
   mutation UpdateOrganizationSettings(
@@ -74,7 +74,7 @@ const OrganizationOfAUserLandingAfterLogin = ({ organization, user }) => {
 
   return (
     <div className="text-left mx-2">
-      <ShippyCloudSkyBanner>{'Features'}</ShippyCloudSkyBanner>
+      {/* <ShippyCloudSkyBanner>{'Features'}</ShippyCloudSkyBanner> */}
       <div className="pl-2 my-auto text-justify">
         {user?.id && organization ? (
           <UserAndOrganizationSettingsCell
@@ -105,13 +105,13 @@ const OrganizationOfAUserLandingAfterLogin = ({ organization, user }) => {
             </div>
           </div>
         )}
-        <NewUserFlow
+        {/* <NewUserFlow
           organizationId={organization.id}
           user={user}
           initialSettings={organization.organizationSettings} // Ensure correct initial settings
           updateOrganizationSettingsInDB={updateOrganizationSettingsInDB}
           updateUserToHaveANameInDB={updateUserToHaveANameInDB}
-        />
+        /> */}
       </div>
     </div>
   )

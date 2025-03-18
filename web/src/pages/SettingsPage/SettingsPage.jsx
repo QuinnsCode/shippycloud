@@ -2,6 +2,7 @@
 import { Metadata } from '@redwoodjs/web'
 
 import OrganizationSettings from 'src/components/OrganizationWidgets/OrganizationSettings/OrganizationSettings'
+import ShippyCloudColorfulBackground from 'src/components/shippyUi/ShippyCloudColorfulBackground/ShippyCloudColorfulBackground'
 import ShippyCloudPageContent from 'src/components/shippyUi/ShippyCloudPageContent/ShippyCloudPageContent'
 import ShippyCloudPageHeader from 'src/components/shippyUi/ShippyCloudPageHeader/ShippyCloudPageHeader'
 const SettingsPage = ({ appId, userId }) => {
@@ -14,13 +15,16 @@ const SettingsPage = ({ appId, userId }) => {
       </ShippyCloudPageHeader> */}
       <ShippyCloudPageContent>
         {/* <p>page content</p> */}
-        {appId ? (
-          <>
-            <OrganizationSettings id={appId} userId={userId} />
-          </>
-        ) : (
-          <></>
-        )}
+
+        <ShippyCloudColorfulBackground>
+          {appId ? (
+            <>
+              <OrganizationSettings id={appId} userId={userId} />
+            </>
+          ) : (
+            <></>
+          )}
+        </ShippyCloudColorfulBackground>
       </ShippyCloudPageContent>
     </>
   )

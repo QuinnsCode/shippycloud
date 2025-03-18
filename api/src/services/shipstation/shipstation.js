@@ -39,48 +39,74 @@ export const getShipstation = async (
         id: organizationId,
       },
       provider: 'SHIPSTATION',
-      // Optionally include isActive: true, if it's needed in your logic
-      // isActive: true,
     },
   })
 
   if (!apiKeyRecord) {
-    console.log('LENGTH: ' + apiKeyRecord?.length)
-
-    console.log('getShipstation')
     throw new UserInputError(
       'No active Shipstation API key found for this organization'
     )
   }
 
-  const decryptedKey = decrypt({
-    encrypted: apiKeyRecord.encryptedKey,
-    iv: apiKeyRecord.keyIv,
-    tag: apiKeyRecord.keyTag,
-  })
-
-  // Use the decrypted key directly since it's already in base64 format
-  let response = null
   try {
-    response = await fetch(shipstationUrl, {
-      headers: {
-        Authorization: `Basic ${decryptedKey}`,
-        'Content-Type': 'application/json',
-      },
+    // Add this simple debug logging
+    console.log('API Key record:', {
+      orgId: organizationId,
+      found: Boolean(apiKeyRecord),
+      keyIdLastFour: apiKeyRecord?.id.slice(-4) || 'none',
+      // Add these to see the encrypted components
+      ivLength: apiKeyRecord?.keyIv?.length,
+      tagLength: apiKeyRecord?.keyTag?.length,
+      encryptedLength: apiKeyRecord?.encryptedKey?.length,
     })
+    // Decrypt the key
+    const decryptedKey = decrypt({
+      encrypted: apiKeyRecord.encryptedKey,
+      iv: apiKeyRecord.keyIv,
+      tag: apiKeyRecord.keyTag,
+    })
+
+    // Always ensure the key is properly formatted for the Authorization header
+    // First make sure we DON'T have "Basic " prefix on the stored key
+    const cleanKey = decryptedKey.startsWith('Basic ')
+      ? decryptedKey.substring(6).trim()
+      : decryptedKey.trim()
+
+    // Then add the "Basic " prefix for the header
+    const authHeader = `Basic ${cleanKey}`
+
+    // For debugging
+    console.log('Using auth header:', {
+      prefix: authHeader.substring(0, 15) + '...',
+      length: authHeader.length,
+    })
+
+    let response = null
+
+    try {
+      response = await fetch(shipstationUrl, {
+        headers: {
+          Authorization: authHeader,
+          'Content-Type': 'application/json',
+        },
+      })
+    } catch (error) {
+      console.error('Error fetching Shipstation data:', error)
+      throw new Error(`Shipstation API error: ${error.message}`)
+    }
+
+    if (!response.ok) {
+      throw new Error(`Shipstation API error: ${response.statusText}`)
+    }
+
+    const json = await response.json()
+    const jsonStr = JSON.stringify(json)
+
+    return {
+      data: jsonStr,
+    }
   } catch (error) {
-    console.error('Error fetching Shipstation data:', error)
-    throw new Error(`Shipstation API error: ${error.message}`)
-  }
-
-  if (!response.ok) {
-    throw new Error(`Shipstation API error: ${response.statusText}`)
-  }
-
-  const json = await response.json()
-  const jsonStr = JSON.stringify(json)
-
-  return {
-    data: jsonStr,
+    console.error('Error processing API key:', error)
+    throw error
   }
 }

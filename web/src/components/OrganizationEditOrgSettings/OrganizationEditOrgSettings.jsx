@@ -49,11 +49,11 @@ const OrganizationEditOrgSettings = ({ id, organizationSettings }) => {
 
   return (
     <div className="rw-segment">
-      <header className="rw-segment-header">
+      {/* <header className="rw-segment-header">
         <div className="rw-heading font-thin rw-heading-secondary">
           <ShippyCloudBanner>ADD API KEYs: {name}</ShippyCloudBanner>
         </div>
-      </header>
+      </header> */}
 
       <div className="rw-segment-main">
         {/* <OrganizationSettingsForm
@@ -63,8 +63,9 @@ const OrganizationEditOrgSettings = ({ id, organizationSettings }) => {
           error={error}
           loading={loading}
         /> */}
-        <h1>Edit Organization API Key</h1>
-        <GenerateOrgApiKeyForm organizationId={id} />
+        {/* <h1>Edit Organization API Key</h1>
+        <GenerateOrgApiKeyForm organizationId={id} /> */}
+        Contact support with any questions.
       </div>
     </div>
   )

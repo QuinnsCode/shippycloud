@@ -4,8 +4,6 @@ import { db } from 'src/lib/db'
 import { encrypt, decrypt } from 'src/lib/encryption'
 
 const validateOrganizationAccess = async (organizationId, context) => {
-  // console.log(organizationId)
-  // console.log(context)
   if (!context?.currentUser?.id) {
     throw new ForbiddenError('Authentication required')
   }
@@ -22,6 +20,17 @@ const validateOrganizationAccess = async (organizationId, context) => {
   if (!membership || !['ADMIN', 'OWNER'].includes(membership.role)) {
     throw new ForbiddenError('Not authorized to manage API keys')
   }
+}
+
+/**
+ * Ensures API key is in a consistent format by removing 'Basic ' prefix if present
+ * @param {string} key - API key that may or may not have 'Basic ' prefix
+ * @returns {string} API key without 'Basic ' prefix
+ */
+const normalizeApiKey = (key) => {
+  if (!key) return ''
+  const trimmed = key.trim()
+  return trimmed.startsWith('Basic ') ? trimmed.substring(6).trim() : trimmed
 }
 
 export const createOrganizationApiKey = async ({ input }, { context }) => {
@@ -46,8 +55,19 @@ export const createOrganizationApiKey = async ({ input }, { context }) => {
     // Validate organization access first
     await validateOrganizationAccess(input.organizationId, context)
 
-    // Encrypt the API key
-    const encryptedData = encrypt(input.apiKey)
+    // Normalize the API key - remove 'Basic ' prefix if present
+    const normalizedKey = normalizeApiKey(input.apiKey)
+
+    // Log key format for debugging (remove in production)
+    console.log('Storing API key:', {
+      provider: input.provider,
+      original_length: input.apiKey.length,
+      normalized_length: normalizedKey.length,
+      changed: input.apiKey !== normalizedKey,
+    })
+
+    // Encrypt the normalized API key
+    const encryptedData = encrypt(normalizedKey)
 
     if (!encryptedData) {
       throw new Error('Failed to encrypt API key')

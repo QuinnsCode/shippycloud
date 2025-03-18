@@ -24,10 +24,10 @@ export const encodeShipstationApiKey = (apiKey, apiSecret) => {
  * @returns {string} API key without the "Basic " prefix
  */
 export const processApiKey = (key) => {
-  if (key && typeof key === 'string' && key.startsWith('Basic ')) {
-    return key.substring(6) // Remove the "Basic " prefix
-  }
-  return key
+  if (!key) return ''
+  const trimmed = key.trim()
+  // Always remove "Basic " prefix if present
+  return trimmed.startsWith('Basic ') ? trimmed.substring(6).trim() : trimmed
 }
 
 /**

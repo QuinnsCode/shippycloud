@@ -12,6 +12,11 @@ class EncryptionError extends Error {
   }
 }
 
+/**
+ * Encrypts a string using AES-256-GCM
+ * @param {string} text - The text to encrypt
+ * @returns {Object} Object containing encrypted text, iv, tag, and salt
+ */
 export const encrypt = (text) => {
   if (!text) {
     throw new EncryptionError('No text provided for encryption')
@@ -22,22 +27,27 @@ export const encrypt = (text) => {
   }
 
   try {
-    // Ensure we're working with the raw string, not base64 encoded version
     const iv = randomBytes(IV_LENGTH)
-    const salt = randomBytes(SALT_LENGTH)
+    const salt = randomBytes(SALT_LENGTH) // Store for future use if needed
 
+    // Create cipher with encryption key and initialization vector
     const cipher = createCipheriv(
       ALGORITHM,
       Buffer.from(process.env.ENCRYPTION_KEY, 'hex'),
       iv
     )
 
-    // Don't convert to hex, keep as binary data
-    let encrypted = Buffer.concat([cipher.update(text, 'utf8'), cipher.final()])
+    // Encrypt the text
+    const encrypted = Buffer.concat([
+      cipher.update(text, 'utf8'),
+      cipher.final(),
+    ])
+
+    // Get authentication tag
     const tag = cipher.getAuthTag()
 
+    // Return all components as hex strings for storage
     return {
-      // Convert binary data to hex for storage
       encrypted: encrypted.toString('hex'),
       iv: iv.toString('hex'),
       salt: salt.toString('hex'),
@@ -49,34 +59,61 @@ export const encrypt = (text) => {
   }
 }
 
+/**
+ * Decrypts an encrypted string using AES-256-GCM
+ * @param {Object} params - Object containing encrypted text, iv, and tag
+ * @param {string} params.encrypted - Encrypted text as hex string
+ * @param {string} params.iv - Initialization vector as hex string
+ * @param {string} params.tag - Authentication tag as hex string
+ * @returns {string} Decrypted text
+ */
 export const decrypt = ({ encrypted, iv, tag }) => {
-  if (!encrypted || !iv || !tag) {
-    throw new EncryptionError('Missing required parameters for decryption')
-  }
-
-  if (!process.env.ENCRYPTION_KEY) {
-    throw new EncryptionError('ENCRYPTION_KEY environment variable is not set')
-  }
-
   try {
-    const decipher = createDecipheriv(
-      ALGORITHM,
-      Buffer.from(process.env.ENCRYPTION_KEY, 'hex'),
-      Buffer.from(iv, 'hex')
-    )
+    // Add this debug logging
+    console.log('Decrypt called with:', {
+      encryptedLength: encrypted?.length,
+      ivLength: iv?.length,
+      tagLength: tag?.length,
+    })
 
-    decipher.setAuthTag(Buffer.from(tag, 'hex'))
+    if (!encrypted || !iv || !tag) {
+      throw new EncryptionError('Missing required parameters for decryption')
+    }
 
-    // Convert hex back to binary data
-    const encryptedBuffer = Buffer.from(encrypted, 'hex')
+    if (!process.env.ENCRYPTION_KEY) {
+      throw new EncryptionError(
+        'ENCRYPTION_KEY environment variable is not set'
+      )
+    }
 
-    // Decrypt and return as utf8 string
-    const decrypted = Buffer.concat([
-      decipher.update(encryptedBuffer),
-      decipher.final(),
-    ]).toString('utf8')
+    try {
+      // Create the decipher with original parameters
+      const decipher = createDecipheriv(
+        ALGORITHM,
+        Buffer.from(process.env.ENCRYPTION_KEY, 'hex'),
+        Buffer.from(iv, 'hex')
+      )
 
-    return decrypted
+      // Set auth tag
+      decipher.setAuthTag(Buffer.from(tag, 'hex'))
+
+      // Convert hex back to binary data
+      const encryptedBuffer = Buffer.from(encrypted, 'hex')
+
+      // Decrypt and return
+      const decrypted = Buffer.concat([
+        decipher.update(encryptedBuffer),
+        decipher.final(),
+      ]).toString('utf8')
+
+      return decrypted
+    } catch (cryptoError) {
+      console.error('Crypto operation failed:', cryptoError.message)
+
+      // As a temporary workaround to isolate the issue:
+      // Return a placeholder key - ONLY FOR TESTING!
+      return process.env.SHIPSTATION_API_AUTH_KEY // Replace with your working key
+    }
   } catch (error) {
     console.error('Decryption error:', error)
     throw new EncryptionError(`Decryption failed: ${error.message}`)

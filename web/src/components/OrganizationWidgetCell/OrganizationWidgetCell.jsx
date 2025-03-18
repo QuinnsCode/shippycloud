@@ -1,5 +1,6 @@
 import AddOrganizations from 'src/components/AddOrganizations/AddOrganizations'
 import OrganizationList from 'src/components/OrganizationList/OrganizationList'
+import ShippyCloudFailure from 'src/components/shippyUi/ShippyCloudFailure/ShippyCloudFailure'
 
 export const QUERY = gql`
   query FindOrganizationWidgetQuery($userId: String!) {
@@ -23,7 +24,7 @@ export const Empty = ({ userId }) => (
 )
 
 export const Failure = ({ error }) => (
-  <div style={{ color: 'red' }}>Error: {error?.message}</div>
+  <ShippyCloudFailure errorMessage={error?.message} />
 )
 
 export const Success = ({ organizations, userId }) => {

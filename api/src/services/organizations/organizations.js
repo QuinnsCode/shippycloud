@@ -170,7 +170,6 @@ export const userAndOrganizationSettings = async ({
   }
 }
 
-// New service - userAndOrganizationWithKeys
 export const userAndOrganizationWithKeys = async ({
   userId,
   organizationId,
@@ -187,6 +186,7 @@ export const userAndOrganizationWithKeys = async ({
           id: true,
           name: true,
           email: true,
+          userSettings: true,
         },
       },
       organization: {
@@ -215,11 +215,32 @@ export const userAndOrganizationWithKeys = async ({
   // Determine if the user is an admin
   const isAdmin = orgMember.role === 'ADMIN'
 
-  // Extract API key information
-  const hasApiKeys = orgMember.organization.apiKeys?.length > 0
-  const apiKeyProviders = isAdmin
-    ? orgMember.organization.apiKeys.map((key) => key.provider)
-    : []
+  // Check if the organization has any API keys
+  const organizationHasApiKeys =
+    orgMember.organization.apiKeys?.length > 0 || false
+
+  // Check if user has chosen display preference (email or name)
+  let hasChosenDisplayEmailOrName = false
+
+  try {
+    // Check if user has a non-empty name
+    if (orgMember.user.name && orgMember.user.name.trim() !== '') {
+      hasChosenDisplayEmailOrName = true
+    } else if (orgMember.user.userSettings) {
+      // Try to parse user settings
+      const userSettings = JSON.parse(orgMember.user.userSettings)
+      if (
+        userSettings &&
+        userSettings.hasOwnProperty('displayNamePreference')
+      ) {
+        hasChosenDisplayEmailOrName = true
+      }
+    }
+  } catch (error) {
+    console.error('Error checking display name preference:', error)
+    // Default to false if there's an error
+    hasChosenDisplayEmailOrName = false
+  }
 
   // Construct response with conditional fields based on role
   return {
@@ -227,20 +248,26 @@ export const userAndOrganizationWithKeys = async ({
     userId: userId,
     organizationId: organizationId,
     // Include user data
-    name: orgMember.user.name,
-    email: orgMember.user.email,
+    name: orgMember.user.name || '',
+    email: orgMember.user.email || '',
     // Include organization data
-    organizationName: orgMember.organization.name,
+    organizationName: orgMember.organization.name || '',
     // Include role information
-    role: orgMember.role,
-    isAdmin,
+    role: orgMember.role || '',
+    isAdmin: isAdmin || false,
     // Only include settings if user is an admin
     organizationSettings: isAdmin
       ? orgMember.organization.organizationSettings
       : null,
-    // Include API key information
-    hasApiKeys,
-    apiKeyProviders: isAdmin ? apiKeyProviders : [],
+    // Include API key information - focus on organization level
+    organizationHasApiKeys: organizationHasApiKeys || false,
+    apiKeyProviders: isAdmin
+      ? (orgMember.organization.apiKeys || []).map((key) => key.provider)
+      : [],
+    // Keep this for backward compatibility
+    hasApiKeys: organizationHasApiKeys || false,
+    // Add display name preference check
+    hasChosenDisplayEmailOrName: hasChosenDisplayEmailOrName || false,
   }
 }
 

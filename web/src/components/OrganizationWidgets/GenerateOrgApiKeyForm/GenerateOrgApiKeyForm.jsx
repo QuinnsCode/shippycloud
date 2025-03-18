@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
 
+import { toast } from 'sonner'
+
 import { useMutation } from '@redwoodjs/web'
-import { toast } from '@redwoodjs/web/toast'
+// import { toast } from '@redwoodjs/web/toast'
 
 import ShippyCloudBanner from 'src/components/shippyUi/ShippyCloudBanner/ShippyCloudBanner'
 

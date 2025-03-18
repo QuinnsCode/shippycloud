@@ -1,6 +1,7 @@
 import { useState } from 'react'
 
 import PostHogTestButton from 'src/components/PostHogTestButton/PostHogTestButton'
+import ShippyCloudFailure from 'src/components/shippyUi/ShippyCloudFailure/ShippyCloudFailure'
 import ShippyCloudSearchBar from 'src/components/shippyUi/ShippyCloudSearchBar/ShippyCloudSearchBar'
 import { ShipstationQueries } from 'src/gql/shipstation'
 
@@ -16,7 +17,7 @@ export const Loading = ({ organizationId }) => (
 export const Empty = () => <div>Empty</div>
 
 export const Failure = ({ error }) => (
-  <div style={{ color: 'red' }}>Error: {error?.message}</div>
+  <ShippyCloudFailure errorMessage={error?.message} />
 )
 
 export const Success = ({ shipders }) => {

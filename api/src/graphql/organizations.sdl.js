@@ -57,6 +57,8 @@ export const schema = gql`
     role: String
     isAdmin: Boolean!
     hasApiKeys: Boolean!
+    organizationHasApiKeys: Boolean!
+    hasChosenDisplayEmailOrName: Boolean!
     apiKeyProviders: [String]
   }
 

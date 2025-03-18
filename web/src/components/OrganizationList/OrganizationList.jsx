@@ -256,7 +256,8 @@ const OrganizationCard = React.memo(({ organization, index }) => {
   return (
     <Link
       ref={cardRef}
-      to={routes.homeWithAppId({ appId: organization.id })}
+      // to={routes.homeWithAppId({ appId: organization.id })}
+      to={routes.onboarding({ appId: organization.id })}
       className="bg-gradient-to-br from-sky-500 via-sky-600 to-sky-500 rounded-2xl overflow-hidden p-4 w-full max-w-sm h-80 relative shadow-xl shadow-slate-600 m-4 rw-button inline "
       onMouseMove={handleMouseMove}
     >
